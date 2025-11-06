@@ -13,7 +13,7 @@ export default function Hero() {
     let animationFrameId = 0;
     let winW = 0;
     let winH = 0;
-    let ticker = 0;
+    // animation state
     let Balls: Array<Ball> = [];
     const maxBalls = 10;
 
@@ -80,7 +80,6 @@ export default function Hero() {
     };
 
     const animate = () => {
-      ticker += 0.1;
       context.clearRect(0, 0, winW, winH);
       Balls.forEach((ball) => {
         ball.update();
@@ -98,8 +97,9 @@ export default function Hero() {
 
     const handleResize = () => init();
 
-    ['mousemove', 'touchstart', 'touchmove'].forEach((name) => {
-      window.addEventListener(name as any, getMouse, { passive: true });
+    const events: Array<keyof WindowEventMap> = ['mousemove', 'touchstart', 'touchmove'];
+    events.forEach((name) => {
+      window.addEventListener(name, getMouse as EventListener, { passive: true });
     });
     window.addEventListener('resize', handleResize);
 
@@ -108,8 +108,8 @@ export default function Hero() {
 
     return () => {
       window.cancelAnimationFrame(animationFrameId);
-      ['mousemove', 'touchstart', 'touchmove'].forEach((name) => {
-        window.removeEventListener(name as any, getMouse as any);
+      events.forEach((name) => {
+        window.removeEventListener(name, getMouse as EventListener);
       });
       window.removeEventListener('resize', handleResize);
     };
