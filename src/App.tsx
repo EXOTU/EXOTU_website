@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import Mission from './components/Mission';
@@ -51,6 +52,7 @@ function App() {
         {renderPage()}
       </main>
       <Footer onNavigate={setCurrentPage} />
+      <Analytics />
     </div>
   );
 }
