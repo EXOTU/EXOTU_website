@@ -1,0 +1,43 @@
+name: Uptime monitor
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PROD_URL
+        id: check
+        env:
+          PROD_URL: ${{ secrets.PROD_URL }}
+        run: |
+          if [ -z "$PROD_URL" ]; then
+            echo "::error::Missing PROD_URL secret";
+            exit 1;
+          fi
+          echo "Pinging $PROD_URL";
+          status=$(curl -s -o /dev/null -w "%{http_code}" "$PROD_URL");
+          echo "status=$status" >> $GITHUB_OUTPUT
+          test "$status" -ge 200 -a "$status" -lt 400
+
+      - name: Send downtime email
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "Uptime Alert: ${{ secrets.PROD_URL }} is down"
+          to: ${{ secrets.NOTIFY_TO_EMAIL }}
+          from: ${{ secrets.NOTIFY_FROM_EMAIL }}
+          secure: true
+          html_body: |
+            <h3>Uptime check failed</h3>
+            <p>URL: ${{ secrets.PROD_URL }}</p>
+            <p>Status code: ${{ steps.check.outputs.status }}</p>
+            <p>Run: <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">View logs</a></p>
+

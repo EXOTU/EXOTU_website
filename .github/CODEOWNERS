@@ -1,0 +1,9 @@
+# CODEOWNERS defines reviewers automatically for changes.
+# Use GitHub teams (e.g., @org/team) or individual users.
+
+* @MoeHamzaA
+
+# Example: route specific files to teams/users
+# src/components/ @MoeHamzaA
+# src/pages/SponsorsPage.tsx @MoeHamzaA
+

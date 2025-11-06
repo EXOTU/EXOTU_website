@@ -1,0 +1,130 @@
+name: Release
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'skip ci') && !contains(github.event.head_commit.message, '[skip release]')"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Get current version
+        id: current_version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "current=$VERSION" >> $GITHUB_OUTPUT
+          echo "Current version: $VERSION"
+
+      - name: Determine version bump
+        id: version_bump
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "Last tag: $LAST_TAG"
+          
+          COMMITS=$(git log ${LAST_TAG}..HEAD --pretty=format:"%s" 2>/dev/null || git log --pretty=format:"%s" -n 20)
+          echo "Commits since last tag:"
+          echo "$COMMITS"
+          
+          BUMP="patch"
+          if echo "$COMMITS" | grep -qE "^feat\(|^feat:"; then
+            BUMP="minor"
+          fi
+          if echo "$COMMITS" | grep -qE "BREAKING CHANGE|^feat\(.*\)!:"; then
+            BUMP="major"
+          fi
+          
+          echo "bump=$BUMP" >> $GITHUB_OUTPUT
+          echo "Version bump: $BUMP"
+
+      - name: Bump version
+        id: new_version
+        run: |
+          CURRENT="${{ steps.current_version.outputs.current }}"
+          BUMP="${{ steps.version_bump.outputs.bump }}"
+          
+          IFS='.' read -r MAJOR MINOR PATCH <<< "${CURRENT}"
+          
+          case "$BUMP" in
+            major)
+              MAJOR=$((MAJOR + 1))
+              MINOR=0
+              PATCH=0
+              ;;
+            minor)
+              MINOR=$((MINOR + 1))
+              PATCH=0
+              ;;
+            patch)
+              PATCH=$((PATCH + 1))
+              ;;
+          esac
+          
+          NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
+          echo "new=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "New version: $NEW_VERSION"
+          
+          npm version $NEW_VERSION --no-git-tag-version
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git commit -m "chore: bump version to $NEW_VERSION [skip ci]"
+          git push
+
+      - name: Create git tag
+        run: |
+          NEW_VERSION="${{ steps.new_version.outputs.new }}"
+          git tag -a "v${NEW_VERSION}" -m "Release v${NEW_VERSION}"
+          git push origin "v${NEW_VERSION}"
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0 HEAD~1 2>/dev/null || echo "")
+          if [ -z "$LAST_TAG" ]; then
+            COMMITS=$(git log --pretty=format:"- %s (%h)" -n 20)
+          else
+            COMMITS=$(git log ${LAST_TAG}..HEAD --pretty=format:"- %s (%h)")
+          fi
+          
+          CHANGELOG=$(cat <<EOF
+          ## What's Changed
+          
+          $COMMITS
+          
+          **Full Changelog**: ${{ github.server_url }}/${{ github.repository }}/compare/${{ github.event.before }}...${{ github.sha }}
+          EOF
+          )
+          
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.new_version.outputs.new }}
+          name: Release v${{ steps.new_version.outputs.new }}
+          body: ${{ steps.changelog.outputs.changelog }}
+          draft: false
+          prerelease: false
+

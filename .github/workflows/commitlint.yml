@@ -1,0 +1,40 @@
+name: Commit Message Lint
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+jobs:
+  lint-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate commit messages
+        run: |
+          # Get all commits in the PR
+          COMMITS=$(git log origin/main..HEAD --pretty=format:"%s")
+          
+          if [ -z "$COMMITS" ]; then
+            echo "No new commits to validate"
+            exit 0
+          fi
+          
+          echo "$COMMITS" | while IFS= read -r commit; do
+            # Check for conventional commit format
+            if ! echo "$commit" | grep -qE "^(feat|fix|docs|style|refactor|perf|test|chore|build|ci|revert)(\(.+\))?(!)?: .{1,}"; then
+              echo "::error::Invalid commit message: $commit"
+              echo "Commit messages must follow Conventional Commits format:"
+              echo "  feat: add new feature"
+              echo "  fix: resolve bug"
+              echo "  docs: update documentation"
+              echo "  etc."
+              exit 1
+            fi
+          done
+          
+          echo "✓ All commit messages are valid"
+
