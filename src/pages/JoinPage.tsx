@@ -16,11 +16,25 @@ export default function JoinPage() {
   const [waitlistEmail, setWaitlistEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
+  const [emailError, setEmailError] = useState('');
+  const [waitlistEmailError, setWaitlistEmailError] = useState('');
+
+  const validateEmail = (email: string): boolean => {
+    return email.endsWith('@ontariotechu.net');
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setEmailError('');
     setSubmitStatus({ type: null, message: '' });
+
+    // Validate email domain
+    if (!validateEmail(formData.email)) {
+      setEmailError('Please use your @ontariotechu.net email address. Personal emails (Gmail, Yahoo, etc.) are not accepted.');
+      return;
+    }
+
+    setIsSubmitting(true);
 
     let response: Response | null = null;
 
@@ -97,8 +111,16 @@ Relevant Experience: ${formData.experience || 'Not provided'}
 
   const handleWaitlistSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setWaitlistEmailError('');
     setSubmitStatus({ type: null, message: '' });
+
+    // Validate email domain
+    if (!validateEmail(waitlistEmail)) {
+      setWaitlistEmailError('Please use your @ontariotechu.net email address. Personal emails (Gmail, Yahoo, etc.) are not accepted.');
+      return;
+    }
+
+    setIsSubmitting(true);
 
     let response: Response | null = null;
 
@@ -222,17 +244,30 @@ Relevant Experience: ${formData.experience || 'Not provided'}
 
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Email Address *
+                    Ontario Tech Email Address *
                   </label>
                   <input
                     type="email"
                     name="email"
                     required
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none"
-                    placeholder="john@university.edu"
+                    onChange={(e) => {
+                      setFormData({ ...formData, email: e.target.value });
+                      setEmailError('');
+                    }}
+                    className={`w-full px-4 py-3 bg-gray-800 border rounded-lg text-white placeholder-gray-500 focus:outline-none ${
+                      emailError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-blue-500'
+                    }`}
+                    placeholder="your.name@ontariotechu.net"
+                    pattern="[a-zA-Z0-9._%+-]+@ontariotechu\.net"
                   />
+                  {emailError ? (
+                    <p className="text-sm text-red-400 mt-2">{emailError}</p>
+                  ) : (
+                    <p className="text-xs text-gray-500 mt-2">
+                      Must be an @ontariotechu.net email address
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -341,15 +376,23 @@ Relevant Experience: ${formData.experience || 'Not provided'}
                       name="email"
                       required
                       value={waitlistEmail}
-                      onChange={(e) => setWaitlistEmail(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none"
+                      onChange={(e) => {
+                        setWaitlistEmail(e.target.value);
+                        setWaitlistEmailError('');
+                      }}
+                      className={`w-full px-4 py-3 bg-gray-800 border rounded-lg text-white placeholder-gray-500 focus:outline-none ${
+                        waitlistEmailError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-blue-500'
+                      }`}
                       placeholder="your.name@ontariotechu.net"
                       pattern="[a-zA-Z0-9._%+-]+@ontariotechu\.net"
-                      title="Please enter a valid Ontario Tech email address"
                     />
-                    <p className="text-xs text-gray-500 mt-2">
-                      Must be an @ontariotechu.net email address
-                    </p>
+                    {waitlistEmailError ? (
+                      <p className="text-sm text-red-400 mt-2">{waitlistEmailError}</p>
+                    ) : (
+                      <p className="text-xs text-gray-500 mt-2">
+                        Must be an @ontariotechu.net email address
+                      </p>
+                    )}
                   </div>
 
                   {submitStatus.type && (

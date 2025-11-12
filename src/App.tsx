@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import Navigation from './components/Navigation';
@@ -13,9 +13,15 @@ import SponsorsPage from './pages/SponsorsPage';
 import GalleryPage from './pages/GalleryPage';
 import BlogPage from './pages/BlogPage';
 import Footer from './components/Footer';
+import StructuredData from './components/StructuredData';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
+
+  // Scroll to top when page changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentPage]);
 
   const renderPage = () => {
     switch (currentPage) {
@@ -28,7 +34,7 @@ function App() {
           </>
         );
       case 'about':
-        return <AboutPage />;
+        return <AboutPage onNavigate={setCurrentPage} />;
       case 'projects':
         return <ProjectsPage />;
       case 'team':
@@ -48,6 +54,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-black text-gray-100">
+      <StructuredData />
       <Navigation currentPage={currentPage} onNavigate={setCurrentPage} />
       <main>
         {renderPage()}

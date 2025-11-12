@@ -36,7 +36,7 @@ export default function Footer({ onNavigate }: FooterProps) {
           <div>
             <h3 className="text-white font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              {['about', 'projects', 'team', 'gallery'].map((page) => (
+              {['about', 'projects', 'team'].map((page) => (
                 <li key={page}>
                   <button
                     onClick={() => onNavigate(page)}
@@ -52,13 +52,13 @@ export default function Footer({ onNavigate }: FooterProps) {
           <div>
             <h3 className="text-white font-semibold mb-4">Get Involved</h3>
             <ul className="space-y-2">
-              {['join', 'sponsors', 'blog'].map((page) => (
+              {['join', 'sponsors'].map((page) => (
                 <li key={page}>
                   <button
                     onClick={() => onNavigate(page)}
                     className="text-gray-400 hover:text-blue-400 transition-colors capitalize"
                   >
-                    {page === 'blog' ? 'Research' : page}
+                    {page}
                   </button>
                 </li>
               ))}

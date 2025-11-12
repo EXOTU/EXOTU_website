@@ -1,0 +1,17 @@
+# robots.txt for EXOTU Website
+#
+# IMPORTANT: Update the Sitemap URL below when your domain changes!
+# Replace "https://exotu-website.vercel.app" with your actual domain.
+#
+# Current URL: https://exotu-website.vercel.app
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://exotu-website.vercel.app/sitemap.xml
+
+# Disallow admin or private areas if any
+# Disallow: /admin/
+# Disallow: /private/
+

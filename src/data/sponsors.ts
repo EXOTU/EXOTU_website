@@ -7,26 +7,23 @@ export interface Sponsor {
 }
 
 export const platinum: Sponsor[] = [
-  { name: 'Microsoft' },
+  { name: 'Your Company Here' },
 ];
 
 export const gold: Sponsor[] = [
-  { name: 'nexos.ai' },
-  { name: 'incogni' },
-  { name: 'Saily' },
-  { name: 'NordPass' },
-  { name: 'NordVPN' },
-  { name: 'NordProtect' },
+  { name: 'Your Company Here' },
+  { name: 'Your Company Here' },
+  { name: 'Your Company Here' },
 ];
 
 export const silver: Sponsor[] = [
-  { name: 'TechCorp Solutions' },
-  { name: 'InnovateLab' },
-  { name: 'FutureSystems' },
+  { name: 'Your Company Here' },
+  { name: 'Your Company Here' },
+  { name: 'Your Company Here' },
 ];
 
 export const bronze: Sponsor[] = [
-  { name: 'dayforce' },
-  { name: 'Ensure IT Solutions' },
+  { name: 'Your Company Here' },
+  { name: 'Your Company Here' },
 ];
 

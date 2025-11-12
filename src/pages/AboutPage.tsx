@@ -1,6 +1,10 @@
 import { Rocket, Users, Trophy, BookOpen } from 'lucide-react';
 
-export default function AboutPage() {
+interface AboutPageProps {
+  onNavigate: (page: string) => void;
+}
+
+export default function AboutPage({ onNavigate }: AboutPageProps) {
   return (
     <div className="pt-16 min-h-screen bg-black">
       <div className="relative py-24 px-4 bg-gradient-to-b from-gray-900 to-black">
@@ -67,10 +71,16 @@ export default function AboutPage() {
             to help us build the future of human augmentation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition-all">
+            <button 
+              onClick={() => onNavigate('join')}
+              className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition-all"
+            >
               Become a Member
             </button>
-            <button className="px-8 py-4 bg-transparent border-2 border-blue-500 hover:bg-blue-500/10 text-blue-400 font-semibold rounded-lg transition-all">
+            <button 
+              onClick={() => onNavigate('sponsors')}
+              className="px-8 py-4 bg-transparent border-2 border-blue-500 hover:bg-blue-500/10 text-blue-400 font-semibold rounded-lg transition-all"
+            >
               Partner With Us
             </button>
           </div>

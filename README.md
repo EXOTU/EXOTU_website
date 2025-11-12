@@ -29,6 +29,8 @@ Comprehensive documentation is available in the [`documentation/`](./documentati
 - **[Development Workflow](./documentation/development-workflow.md)** - Git workflow, commits, and CI/CD
 - **[Deployment](./documentation/deployment.md)** - Deploying to Vercel and production
 - **[Configuration](./documentation/configuration.md)** - Environment variables and settings
+- **[SEO Optimization](./documentation/seo.md)** - SEO setup and best practices
+- **[Updating Site URL](./documentation/updating-site-url.md)** - How to change the website URL
 
 ## Prerequisites
 - Node.js 18+ (recommended LTS)

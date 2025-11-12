@@ -146,10 +146,7 @@ export default function SponsorsPage() {
               Partner with EXOTU to support the next generation of robotics innovators and gain
               access to cutting-edge research in powered exoskeleton technology.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition-all shadow-lg shadow-blue-500/20">
-                Download Sponsorship Package
-              </button>
+            <div className="flex justify-center">
               <button className="px-8 py-4 bg-transparent border-2 border-blue-500 hover:bg-blue-500/10 text-blue-400 font-semibold rounded-lg transition-all">
                 Contact Partnership Team
               </button>
