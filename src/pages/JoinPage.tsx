@@ -1,5 +1,7 @@
-import { CheckCircle, Users, Calendar, Mail } from 'lucide-react';
+import { CheckCircle, Users, Mail } from 'lucide-react';
 import { useState } from 'react';
+import { APPLICATION_OPEN, WEB3FORMS_ACCESS_KEY, EMAIL_RECIPIENT } from '../data/applicationConfig';
+import { benefits, requirements } from '../data/joinPage';
 
 export default function JoinPage() {
   const [formData, setFormData] = useState({
@@ -11,28 +13,137 @@ export default function JoinPage() {
     experience: '',
   });
 
-  const benefits = [
-    'Hands-on experience with cutting-edge robotics technology',
-    'Collaborative environment with multidisciplinary teams',
-    'Access to state-of-the-art lab facilities and equipment',
-    'Opportunities to compete in international competitions',
-    'Networking with industry professionals and researchers',
-    'Build your portfolio with real engineering projects',
-    'Leadership and project management experience',
-    'Connect with like-minded passionate engineers',
-  ];
+  const [waitlistEmail, setWaitlistEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
 
-  const requirements = [
-    'Currently enrolled as a university student',
-    'Passionate about robotics and human augmentation',
-    'Ability to commit 8-10 hours per week',
-    'Strong teamwork and communication skills',
-    'No prior experience required for entry-level positions',
-  ];
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    let response: Response | null = null;
+
+    try {
+      const formDataObj = new FormData(e.currentTarget);
+      formDataObj.append('access_key', WEB3FORMS_ACCESS_KEY);
+      formDataObj.append('subject', 'New EXOTU Application Form Submission');
+      formDataObj.append('from_name', formData.name);
+      formDataObj.append('from_email', formData.email);
+      formDataObj.append('to', EMAIL_RECIPIENT);
+      
+      // Format all form data into a readable message
+      const message = `
+New Application Submission:
+
+Name: ${formData.name}
+Email: ${formData.email}
+Major/Department: ${formData.major}
+Year of Study: ${formData.year}
+Areas of Interest: ${formData.interests}
+Relevant Experience: ${formData.experience || 'Not provided'}
+      `.trim();
+      
+      formDataObj.append('message', message);
+
+      response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formDataObj,
+      });
+
+      // If HTTP response is OK (200-299), treat as success since email was sent
+      if (response.ok) {
+        setSubmitStatus({ type: 'success', message: 'Application submitted successfully! We\'ll get back to you within 48 hours.' });
+        setFormData({
+          name: '',
+          email: '',
+          major: '',
+          year: '',
+          interests: '',
+          experience: '',
+        });
+        e.currentTarget.reset();
+      } else {
+        // Try to get error message from response
+        try {
+          const result = await response.json();
+          setSubmitStatus({ type: 'error', message: result.message || 'Something went wrong. Please try again later.' });
+        } catch {
+          setSubmitStatus({ type: 'error', message: 'Something went wrong. Please try again later.' });
+        }
+      }
+    } catch (error) {
+      // If we got a response and it was OK, treat as success even if there was an error
+      if (response && response.ok) {
+        setSubmitStatus({ type: 'success', message: 'Application submitted successfully! We\'ll get back to you within 48 hours.' });
+        setFormData({
+          name: '',
+          email: '',
+          major: '',
+          year: '',
+          interests: '',
+          experience: '',
+        });
+        e.currentTarget.reset();
+      } else {
+        // Network or other errors - but if email was sent, this might be a false negative
+        console.error('Form submission error:', error);
+        setSubmitStatus({ type: 'error', message: 'There was an issue submitting your request. If you received a confirmation, you\'re all set!' });
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleWaitlistSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    let response: Response | null = null;
+
+    try {
+      const formDataObj = new FormData(e.currentTarget);
+      formDataObj.append('access_key', WEB3FORMS_ACCESS_KEY);
+      formDataObj.append('subject', 'EXOTU Waitlist Signup');
+      formDataObj.append('from_name', 'Waitlist Signup');
+      formDataObj.append('from_email', waitlistEmail);
+      formDataObj.append('to', EMAIL_RECIPIENT);
+      formDataObj.append('message', `New waitlist signup from Ontario Tech University Exoskeleton Design Team website.\n\nEmail: ${waitlistEmail}`);
+
+      response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formDataObj,
+      });
+
+      // If HTTP response is OK (200-299), treat as success since email was sent
+      if (response.ok) {
+        setSubmitStatus({ type: 'success', message: 'Thank you! We\'ve added you to our waitlist and will reach out when applications open.' });
+        setWaitlistEmail('');
+        e.currentTarget.reset();
+      } else {
+        // Try to get error message from response
+        try {
+          const result = await response.json();
+          setSubmitStatus({ type: 'error', message: result.message || 'Something went wrong. Please try again later.' });
+        } catch {
+          setSubmitStatus({ type: 'error', message: 'Something went wrong. Please try again later.' });
+        }
+      }
+    } catch (error) {
+      // If we got a response and it was OK, treat as success even if there was an error
+      if (response && response.ok) {
+        setSubmitStatus({ type: 'success', message: 'Thank you! We\'ve added you to our waitlist and will reach out when applications open.' });
+        setWaitlistEmail('');
+        e.currentTarget.reset();
+      } else {
+        // Network or other errors - but if email was sent, this might be a false negative
+        console.error('Form submission error:', error);
+        setSubmitStatus({ type: 'error', message: 'There was an issue submitting your request. If you received a confirmation, you\'re all set!' });
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -77,32 +188,22 @@ export default function JoinPage() {
                 </div>
               ))}
             </div>
-
-            <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-6">
-              <h3 className="text-xl font-semibold text-white mb-4 flex items-center space-x-2">
-                <Calendar className="text-blue-400" size={24} />
-                <span>Recruitment Timeline</span>
-              </h3>
-              <div className="space-y-3 text-gray-300">
-                <p><strong className="text-white">Fall Semester:</strong> Applications open September 1-15</p>
-                <p><strong className="text-white">Spring Semester:</strong> Applications open January 10-25</p>
-                <p><strong className="text-white">Info Sessions:</strong> First week of each semester</p>
-              </div>
-            </div>
           </div>
         </div>
 
         <div className="max-w-3xl mx-auto">
           <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 md:p-12">
-            <div className="text-center mb-8">
-              <Users size={48} className="text-blue-400 mx-auto mb-4" />
-              <h2 className="text-3xl font-bold text-white mb-2">Application Form</h2>
-              <p className="text-gray-400">
-                Fill out the form below and we'll get back to you within 48 hours
-              </p>
-            </div>
+            {APPLICATION_OPEN ? (
+              <>
+                <div className="text-center mb-8">
+                  <Users size={48} className="text-blue-400 mx-auto mb-4" />
+                  <h2 className="text-3xl font-bold text-white mb-2">Application Form</h2>
+                  <p className="text-gray-400">
+                    Fill out the form below and we'll get back to you within 48 hours
+                  </p>
+                </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -110,6 +211,7 @@ export default function JoinPage() {
                   </label>
                   <input
                     type="text"
+                    name="name"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -124,6 +226,7 @@ export default function JoinPage() {
                   </label>
                   <input
                     type="email"
+                    name="email"
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -140,6 +243,7 @@ export default function JoinPage() {
                   </label>
                   <input
                     type="text"
+                    name="major"
                     required
                     value={formData.major}
                     onChange={(e) => setFormData({ ...formData, major: e.target.value })}
@@ -153,6 +257,7 @@ export default function JoinPage() {
                     Year of Study *
                   </label>
                   <select
+                    name="year"
                     required
                     value={formData.year}
                     onChange={(e) => setFormData({ ...formData, year: e.target.value })}
@@ -173,6 +278,7 @@ export default function JoinPage() {
                   Areas of Interest *
                 </label>
                 <textarea
+                  name="interests"
                   required
                   value={formData.interests}
                   onChange={(e) => setFormData({ ...formData, interests: e.target.value })}
@@ -187,6 +293,7 @@ export default function JoinPage() {
                   Relevant Experience (Optional)
                 </label>
                 <textarea
+                  name="experience"
                   value={formData.experience}
                   onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
                   rows={4}
@@ -195,14 +302,76 @@ export default function JoinPage() {
                 />
               </div>
 
-              <button
-                type="submit"
-                className="w-full px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition-all transform hover:scale-[1.02] flex items-center justify-center space-x-2"
-              >
-                <Mail size={20} />
-                <span>Submit Application</span>
-              </button>
-            </form>
+                  {submitStatus.type && (
+                    <div className={`p-4 rounded-lg ${
+                      submitStatus.type === 'success' 
+                        ? 'bg-green-500/10 border border-green-500/30 text-green-400' 
+                        : 'bg-red-500/10 border border-red-500/30 text-red-400'
+                    }`}>
+                      {submitStatus.message}
+                    </div>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full px-8 py-4 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all transform hover:scale-[1.02] flex items-center justify-center space-x-2"
+                  >
+                    <Mail size={20} />
+                    <span>{isSubmitting ? 'Submitting...' : 'Submit Application'}</span>
+                  </button>
+                </form>
+              </>
+            ) : (
+              <>
+                <div className="text-center mb-8">
+                  <Users size={48} className="text-blue-400 mx-auto mb-4" />
+                  <h2 className="text-3xl font-bold text-white mb-4">Thank You for Your Interest</h2>
+                  <p className="text-gray-300 text-lg leading-relaxed mb-8">
+                    Thank you for your interest in the Ontario Tech University Exoskeleton Design Team, unfortunately we aren't onboarding at the moment. Please leave us your Ontario Tech email and we will reach out when applications open. See you soon!
+                  </p>
+                </div>
+
+                <form onSubmit={handleWaitlistSubmit} className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Ontario Tech Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      value={waitlistEmail}
+                      onChange={(e) => setWaitlistEmail(e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none"
+                      placeholder="your.name@ontariotechu.net"
+                      pattern="[a-zA-Z0-9._%+-]+@ontariotechu\.net"
+                      title="Please enter a valid Ontario Tech email address"
+                    />
+                    <p className="text-xs text-gray-500 mt-2">
+                      Must be an @ontariotechu.net email address
+                    </p>
+                  </div>
+
+                  {submitStatus.type && (
+                    <div className={`p-4 rounded-lg ${
+                      submitStatus.type === 'success' 
+                        ? 'bg-green-500/10 border border-green-500/30 text-green-400' 
+                        : 'bg-red-500/10 border border-red-500/30 text-red-400'
+                    }`}>
+                      {submitStatus.message}
+                    </div>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full px-8 py-4 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all transform hover:scale-[1.02] flex items-center justify-center space-x-2"
+                  >
+                    <Mail size={20} />
+                    <span>{isSubmitting ? 'Submitting...' : 'Join Waitlist'}</span>
+                  </button>
+                </form>
+              </>
+            )}
           </div>
         </div>
       </div>

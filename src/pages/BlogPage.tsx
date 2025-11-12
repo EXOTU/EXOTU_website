@@ -38,24 +38,6 @@ export default function BlogPage() {
       image: 'https://images.pexels.com/photos/7551666/pexels-photo-7551666.jpeg?auto=compress&cs=tinysrgb&w=800',
       readTime: '10 min read',
     },
-    {
-      title: 'Medical Application Progress: LiftAssist Clinical Trials',
-      author: 'Emma Davis',
-      date: 'January 30, 2024',
-      category: 'Medical',
-      excerpt: 'Our LiftAssist lower-limb exoskeleton has entered clinical trials with promising early results. Patients report improved mobility and reduced fatigue during rehabilitation sessions.',
-      image: 'https://images.pexels.com/photos/8853502/pexels-photo-8853502.jpeg?auto=compress&cs=tinysrgb&w=800',
-      readTime: '7 min read',
-    },
-    {
-      title: 'Open Source Initiative: Modular Joint System V2 Released',
-      author: 'Kevin Nguyen',
-      date: 'January 15, 2024',
-      category: 'Open Source',
-      excerpt: 'We\'re excited to announce the release of our Modular Joint System V2 design files and documentation. This open-source platform aims to accelerate exoskeleton research worldwide.',
-      image: 'https://images.pexels.com/photos/159306/construction-site-build-construction-work-159306.jpeg?auto=compress&cs=tinysrgb&w=800',
-      readTime: '6 min read',
-    },
   ];
 
   const categories = ['All', 'Research', 'Competition', 'AI/ML', 'Materials', 'Medical', 'Open Source'];
