@@ -132,15 +132,15 @@ export default function Hero() {
       <div className="relative z-10 h-full flex items-center">
         <div className="px-6 sm:px-10">
           <h1 className="font-extrabold tracking-tight leading-none text-[16vw] sm:text-[12vw] md:text-[10vw] text-white drop-shadow-[0_10px_25px_rgba(0,0,0,0.6)]">
-            EXOTU
+            EX<span className="text-blue-400">OTU</span>
           </h1>
         </div>
       </div>
 
       {/* Sub tagline */}
-      <div className="absolute bottom-10 left-6 sm:left-10 z-10">
+      <div className="absolute bottom-20 left-6 sm:left-10 z-10">
         <p className="text-xl sm:text-2xl md:text-3xl italic text-gray-300/80">
-          Where wearable robotics meets adaptive intelligence.
+          Ontario Tech University Exoskeleton Design Team.
         </p>
       </div>
     </section>

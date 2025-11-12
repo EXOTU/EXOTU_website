@@ -11,12 +11,10 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
 
   const navItems = [
     { id: 'home', label: 'Home' },
+    { id: 'sponsors', label: 'Sponsor' },
     { id: 'about', label: 'About' },
     { id: 'projects', label: 'Projects' },
     { id: 'team', label: 'Team' },
-    { id: 'gallery', label: 'Gallery' },
-    { id: 'blog', label: 'Research' },
-    { id: 'sponsors', label: 'Sponsors' },
     { id: 'join', label: 'Join Us' },
   ];
 
@@ -34,8 +32,8 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
             onClick={() => handleNavigate('home')}
             className="text-2xl font-bold tracking-tight hover:text-blue-400 transition-colors"
           >
-            <span className="text-white">EXO</span>
-            <span className="text-blue-400">TU</span>
+            <span className="text-white">EX</span>
+            <span className="text-blue-400">OTU</span>
           </button>
 
           <div className="hidden md:flex items-center space-x-1">

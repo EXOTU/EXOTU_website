@@ -1,112 +1,11 @@
-import { Cpu, Zap, Shield, Wrench, Brain, Heart } from 'lucide-react';
+import { projects } from '../data/projects';
 
 export default function ProjectsPage() {
-  const projects = [
-    {
-      name: 'APEX-1 Full Body Exoskeleton',
-      category: 'Flagship',
-      icon: Shield,
-      status: 'In Development',
-      progress: 75,
-      image: 'https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=800',
-      description: 'Advanced full-body powered exoskeleton designed for heavy lifting applications and endurance enhancement.',
-      specs: [
-        'Max Load Capacity: 150 kg',
-        'Battery Life: 8 hours',
-        'Weight: 45 kg',
-        'Actuators: 12 DOF',
-      ],
-      team: 'Mechanical, Electrical, Software',
-    },
-    {
-      name: 'LiftAssist Lower Limb System',
-      category: 'Medical',
-      icon: Heart,
-      status: 'Testing Phase',
-      progress: 60,
-      image: 'https://images.pexels.com/photos/8853502/pexels-photo-8853502.jpeg?auto=compress&cs=tinysrgb&w=800',
-      description: 'Assistive lower-limb exoskeleton designed for rehabilitation and mobility enhancement for individuals with limited mobility.',
-      specs: [
-        'Joint Support: Hip, Knee, Ankle',
-        'Weight: 12 kg',
-        'Battery Life: 6 hours',
-        'Max Speed: 4 km/h',
-      ],
-      team: 'Mechanical, Biomedical, Software',
-    },
-    {
-      name: 'PowerGrip Arm Enhancement',
-      category: 'Industrial',
-      icon: Zap,
-      status: 'Competition Ready',
-      progress: 85,
-      image: 'https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=800',
-      description: 'Upper-limb exoskeleton module designed for precision manufacturing and heavy assembly work in industrial settings.',
-      specs: [
-        'Lift Assistance: 35 kg per arm',
-        'Weight: 8 kg',
-        'Range of Motion: 180°',
-        'Battery Life: 10 hours',
-      ],
-      team: 'Mechanical, Electrical',
-    },
-    {
-      name: 'NeuroLink Control System',
-      category: 'Research',
-      icon: Brain,
-      status: 'Research Phase',
-      progress: 40,
-      image: 'https://images.pexels.com/photos/8439093/pexels-photo-8439093.jpeg?auto=compress&cs=tinysrgb&w=800',
-      description: 'Next-generation neural interface for intuitive exoskeleton control using EMG and IMU sensor fusion.',
-      specs: [
-        'Sensors: 16 EMG channels',
-        'Latency: <50ms',
-        'Accuracy: 94%',
-        'ML Model: Custom CNN',
-      ],
-      team: 'Software, ML/AI, Electrical',
-    },
-    {
-      name: 'SpineGuard Posture Support',
-      category: 'Medical',
-      icon: Cpu,
-      status: 'Prototype',
-      progress: 55,
-      image: 'https://images.pexels.com/photos/7551666/pexels-photo-7551666.jpeg?auto=compress&cs=tinysrgb&w=800',
-      description: 'Lightweight back support exoskeleton designed to prevent workplace injuries and improve posture during extended work periods.',
-      specs: [
-        'Weight: 3.5 kg',
-        'Support Force: 20 kg',
-        'Battery Life: 12 hours',
-        'Comfort Rating: 9/10',
-      ],
-      team: 'Mechanical, Design',
-    },
-    {
-      name: 'Modular Joint System V2',
-      category: 'Platform',
-      icon: Wrench,
-      status: 'In Development',
-      progress: 70,
-      image: 'https://images.pexels.com/photos/159306/construction-site-build-construction-work-159306.jpeg?auto=compress&cs=tinysrgb&w=800',
-      description: 'Standardized modular joint platform enabling rapid prototyping and customization across all exoskeleton projects.',
-      specs: [
-        'Torque Range: 5-100 Nm',
-        'Modularity: 100%',
-        'Quick Release: <30 seconds',
-        'Cost Reduction: 40%',
-      ],
-      team: 'Mechanical, Manufacturing',
-    },
-  ];
 
   return (
     <div className="pt-16 min-h-screen bg-black">
       <div className="relative py-24 px-4 bg-gradient-to-b from-gray-900 to-black">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block px-4 py-1 bg-blue-500/10 border border-blue-500/30 rounded-full mb-6">
-            <span className="text-sm text-blue-400 font-medium uppercase tracking-wide">Our Projects</span>
-          </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
             Building Tomorrow's Technology
             <span className="block text-blue-400">Today</span>
@@ -155,26 +54,32 @@ export default function ProjectsPage() {
                       {project.description}
                     </p>
 
-                    <div className="grid sm:grid-cols-2 gap-4 mb-6">
-                      <div>
-                        <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                          Technical Specs
-                        </h4>
-                        <ul className="space-y-1">
-                          {project.specs.map((spec, i) => (
-                            <li key={i} className="text-sm text-gray-300">
-                              • {spec}
-                            </li>
-                          ))}
-                        </ul>
+                    {(project.specs || project.team) && (
+                      <div className="grid sm:grid-cols-2 gap-4 mb-6">
+                        {project.specs && (
+                          <div>
+                            <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                              Technical Specs
+                            </h4>
+                            <ul className="space-y-1">
+                              {project.specs.map((spec, i) => (
+                                <li key={i} className="text-sm text-gray-300">
+                                  • {spec}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                        {project.team && (
+                          <div>
+                            <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                              Team Disciplines
+                            </h4>
+                            <p className="text-sm text-gray-300">{project.team}</p>
+                          </div>
+                        )}
                       </div>
-                      <div>
-                        <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                          Team Disciplines
-                        </h4>
-                        <p className="text-sm text-gray-300">{project.team}</p>
-                      </div>
-                    </div>
+                    )}
                   </div>
 
                   <div>

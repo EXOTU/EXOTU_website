@@ -11,8 +11,8 @@ export default function Footer({ onNavigate }: FooterProps) {
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-2">
             <div className="text-2xl font-bold mb-4">
-              <span className="text-white">EXO</span>
-              <span className="text-blue-400">TU</span>
+              <span className="text-white">EX</span>
+              <span className="text-blue-400">OTU</span>
             </div>
             <p className="text-gray-400 mb-4 max-w-md">
               Engineering the future of human potential through innovative powered exoskeleton technology.

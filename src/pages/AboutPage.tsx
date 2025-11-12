@@ -5,9 +5,6 @@ export default function AboutPage() {
     <div className="pt-16 min-h-screen bg-black">
       <div className="relative py-24 px-4 bg-gradient-to-b from-gray-900 to-black">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block px-4 py-1 bg-blue-500/10 border border-blue-500/30 rounded-full mb-6">
-            <span className="text-sm text-blue-400 font-medium uppercase tracking-wide">About EXOTU</span>
-          </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
             Pioneering the Next Generation of
             <span className="block text-blue-400">Human Augmentation</span>
@@ -25,18 +22,13 @@ export default function AboutPage() {
             <h2 className="text-3xl font-bold text-white mb-6">Our Story</h2>
             <div className="space-y-4 text-gray-400 leading-relaxed">
               <p>
-                EXOTU was established in 2020 by a group of mechanical, electrical, and software
-                engineering students who shared a vision: to make powered exoskeletons accessible,
-                functional, and impactful.
+                EXOTU was established in 2025 by four engineering students who shared a vision: to make powered exoskeletons accessible, functional, and impactful.
               </p>
               <p>
-                What started as a senior design project quickly evolved into a thriving research
-                organization with over 50 active members spanning multiple engineering disciplines.
-                Today, we compete internationally and collaborate with industry leaders.
+                What started as an idea quickly evolved into a thriving research organization with over 60 active members spanning multiple engineering disciplines. Today, we compete nationally and collaborate with industry leaders.
               </p>
               <p>
-                Our team has won multiple awards at robotics competitions and has been recognized
-                for technical innovation, design excellence, and real-world impact.
+                Driven by curiosity, compassion, and a commitment to real-world impact, EXOTU represents the spirit of innovation at Ontario Tech. Our mission goes beyond building a machine, we're building a community of students dedicated to pushing boundaries, learning by doing, and shaping a future where engineering meets purpose.
               </p>
             </div>
           </div>
