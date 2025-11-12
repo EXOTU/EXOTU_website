@@ -1,0 +1,250 @@
+name: Main Pipeline
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Job 1: Validate commits (only on PRs)
+  validate-commits:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate commit messages
+        run: |
+          COMMITS=$(git log origin/main..HEAD --pretty=format:"%s")
+          
+          if [ -z "$COMMITS" ]; then
+            echo "No new commits to validate"
+            exit 0
+          fi
+          
+          echo "$COMMITS" | while IFS= read -r commit; do
+            if ! echo "$commit" | grep -qE "^(feat|fix|docs|style|refactor|perf|test|chore|build|ci|revert)(\(.+\))?(!)?: .{1,}"; then
+              echo "::error::Invalid commit message: $commit"
+              echo "Commit messages must follow Conventional Commits format:"
+              echo "  feat: add new feature"
+              echo "  fix: resolve bug"
+              exit 1
+            fi
+          done
+          
+          echo "✓ All commit messages are valid"
+
+  # Job 2: Type Check (runs in parallel)
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+  # Job 3: Lint (runs in parallel)
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+  # Job 4: Security Audit (runs in parallel)
+  security-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run security audit (report only)
+        run: npm audit --audit-level=moderate || true
+
+      - name: Check for high/critical vulnerabilities
+        run: |
+          if npm audit --audit-level=high 2>&1 | grep -q "found"; then
+            echo "::error::High or critical vulnerabilities found!"
+            exit 1
+          fi
+          echo "✓ No high or critical vulnerabilities found"
+
+  # Job 5: Build (runs in parallel with checks)
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Check build output
+        run: |
+          if [ ! -d "dist" ] || [ -z "$(ls -A dist)" ]; then
+            echo "::error::Build failed: dist directory is empty or missing"
+            exit 1
+          fi
+          echo "✓ Build output verified"
+
+      - name: Upload production build
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 1
+
+  # Job 6: Bundle Size Analysis (depends on build, only on PRs)
+  bundle-size:
+    if: github.event_name == 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Analyze bundle size
+        run: |
+          echo "## Bundle Size Analysis" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| File | Size |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|------|" >> $GITHUB_STEP_SUMMARY
+          
+          find dist/assets -type f \( -name "*.js" -o -name "*.css" \) -exec ls -lh {} \; | \
+          awk '{printf "| %s | %s |\n", $9, $5}' >> $GITHUB_STEP_SUMMARY
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Total bundle size:" >> $GITHUB_STEP_SUMMARY
+          du -sh dist/assets >> $GITHUB_STEP_SUMMARY
+
+      - name: Check bundle size limits
+        run: |
+          MAX_SIZE=5000000  # 5MB in bytes
+          TOTAL_SIZE=$(du -sb dist/assets | cut -f1)
+          
+          if [ $TOTAL_SIZE -gt $MAX_SIZE ]; then
+            echo "::error::Bundle size ($TOTAL_SIZE bytes) exceeds limit ($MAX_SIZE bytes)"
+            exit 1
+          fi
+          
+          echo "Bundle size: $TOTAL_SIZE bytes (limit: $MAX_SIZE bytes) ✓"
+
+  # Job 7: CodeQL Analysis (runs in parallel with other checks)
+  codeql-analysis:
+    name: CodeQL Analysis (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    permissions:
+      # required for all workflows
+      security-events: write
+      # required to fetch internal or private CodeQL packs
+      packages: read
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - language: actions
+          build-mode: none
+        - language: javascript-typescript
+          build-mode: none
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:${{matrix.language}}"
+
+  # Job 8: Send failure notification (only on failure)
+  notify-failure:
+    if: failure()
+    needs: []  # Run on failure of any job, don't wait for specific jobs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send failure email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "Pipeline Failed: ${{ github.repository }}@${{ github.ref_name }}"
+          to: ${{ secrets.NOTIFY_TO_EMAIL }}
+          from: ${{ secrets.NOTIFY_FROM_EMAIL }}
+          secure: true
+          html_body: |
+            <h3>Pipeline failed</h3>
+            <p>Workflow: ${{ github.workflow }}</p>
+            <p>Commit: ${{ github.sha }}</p>
+            <p>Actor: ${{ github.actor }}</p>
+            <p>Run: <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">View logs</a></p>
+

@@ -11,13 +11,16 @@
 #
 name: "CodeQL Advanced"
 
+# This workflow has been consolidated into .github/workflows/main.yml
+# Keeping this file for scheduled runs and manual triggers
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_dispatch:  # Allow manual runs
   schedule:
-    - cron: '41 9 * * 2'
+    - cron: '41 9 * * 2'  # Still runs on schedule (weekly on Tuesdays)
+  # push:
+  #   branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
 
 jobs:
   analyze:

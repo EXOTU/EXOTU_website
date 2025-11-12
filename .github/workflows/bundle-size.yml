@@ -1,8 +1,11 @@
 name: Bundle Size
 
+# This workflow has been consolidated into .github/workflows/main.yml
+# Keeping this file for reference but disabling it
 on:
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:  # Only allow manual runs
+  # pull_request:
+  #   branches: [ main ]
 
 jobs:
   analyze:

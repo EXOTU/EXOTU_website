@@ -1,12 +1,15 @@
 name: Security Audit
 
+# This workflow has been consolidated into .github/workflows/main.yml
+# Keeping this file for reference but disabling it
 on:
-  pull_request:
-    branches: [ main ]
-  push:
-    branches: [ main ]
+  workflow_dispatch:  # Only allow manual runs
   schedule:
-    - cron: '0 0 * * 1' # Weekly on Monday
+    - cron: '0 0 * * 1' # Weekly on Monday (still runs scheduled)
+  # pull_request:
+  #   branches: [ main ]
+  # push:
+  #   branches: [ main ]
 
 jobs:
   audit:

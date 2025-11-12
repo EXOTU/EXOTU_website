@@ -1,8 +1,11 @@
 name: Commit Message Lint
 
+# This workflow has been consolidated into .github/workflows/main.yml
+# Keeping this file for reference but disabling it
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, edited]
+  workflow_dispatch:  # Only allow manual runs
+  # pull_request:
+  #   types: [opened, synchronize, reopened, edited]
 
 jobs:
   lint-commits:
