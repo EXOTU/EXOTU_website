@@ -6,6 +6,11 @@ on:
   push:
     branches: [ main ]
 
+permissions:
+  contents: read
+  statuses: write
+  checks: write
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -259,14 +264,12 @@ jobs:
         uses: vercel/repository-dispatch/actions/status@v1
         with:
           name: 'Vercel - exotu-website: all-checks'
-          status: success
 
       - name: Notify Vercel (failure)
         if: failure()
         uses: vercel/repository-dispatch/actions/status@v1
         with:
           name: 'Vercel - exotu-website: all-checks'
-          status: failure
 
   # Job 9: Send failure notification (only on failure)
   notify-failure:
