@@ -1,36 +1,22 @@
-import { ArrowRight, Cpu, Zap, Shield } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { projects } from '../data/projects';
 
 interface ProjectsPreviewProps {
   onViewAll: () => void;
 }
 
 export default function ProjectsPreview({ onViewAll }: ProjectsPreviewProps) {
-  const projects = [
-    {
-      title: 'APEX-1 Full Body Exoskeleton',
-      category: 'Flagship Project',
-      description: 'Advanced full-body powered exoskeleton designed for heavy lifting and endurance applications',
-      progress: 75,
-      icon: Shield,
-      image: 'https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=800',
-    },
-    {
-      title: 'LiftAssist Lower Limb System',
-      category: 'Medical Application',
-      description: 'Assistive lower-limb exoskeleton for rehabilitation and mobility enhancement',
-      progress: 60,
-      icon: Cpu,
-      image: 'https://images.pexels.com/photos/8853502/pexels-photo-8853502.jpeg?auto=compress&cs=tinysrgb&w=800',
-    },
-    {
-      title: 'PowerGrip Arm Enhancement',
-      category: 'Industrial Focus',
-      description: 'Upper-limb exoskeleton module for precision manufacturing and heavy assembly work',
-      progress: 85,
-      icon: Zap,
-      image: 'https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=800',
-    },
-  ];
+  // Limit to max 4 projects for preview
+  const displayProjects = projects.slice(0, 4);
+  const projectCount = displayProjects.length;
+
+  // Dynamic grid columns based on project count
+  const getGridCols = () => {
+    if (projectCount === 1) return 'md:grid-cols-1';
+    if (projectCount === 2) return 'md:grid-cols-2';
+    if (projectCount === 3) return 'md:grid-cols-3';
+    return 'md:grid-cols-4';
+  };
 
   return (
     <section className="py-24 px-4 bg-black">
@@ -53,8 +39,8 @@ export default function ProjectsPreview({ onViewAll }: ProjectsPreviewProps) {
           </button>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
+        <div className={`grid grid-cols-1 ${getGridCols()} gap-8`}>
+          {displayProjects.map((project, index) => (
             <div
               key={index}
               className="group relative bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:border-blue-500/50 transition-all"
@@ -62,21 +48,21 @@ export default function ProjectsPreview({ onViewAll }: ProjectsPreviewProps) {
               <div className="relative h-64 overflow-hidden">
                 <img
                   src={project.image}
-                  alt={project.title}
+                  alt={project.name}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent" />
                 <div className="absolute top-4 left-4">
                   <div className="flex items-center space-x-2 px-3 py-1 bg-blue-500/90 rounded-full">
                     <project.icon size={14} className="text-white" />
-                    <span className="text-xs font-medium text-white">{project.category}</span>
+                    <span className="text-xs font-medium text-white">{project.categoryDisplay || project.category}</span>
                   </div>
                 </div>
               </div>
 
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-blue-400 transition-colors">
-                  {project.title}
+                  {project.name}
                 </h3>
                 <p className="text-gray-400 mb-4 leading-relaxed">
                   {project.description}
