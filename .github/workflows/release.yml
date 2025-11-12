@@ -1,6 +1,15 @@
 name: Release
 
+# This workflow runs after the main pipeline succeeds
+# It's kept separate because it needs special permissions and only runs on push to main
 on:
+  workflow_run:
+    workflows: ["Main Pipeline"]
+    types:
+      - completed
+    branches: [ main ]
+  # Also allow manual trigger and direct push (for backwards compatibility)
+  workflow_dispatch:
   push:
     branches: [ main ]
 
@@ -11,7 +20,11 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, 'skip ci') && !contains(github.event.head_commit.message, '[skip release]')"
+    # Only run if main pipeline succeeded (for workflow_run trigger) or on direct push
+    if: |
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') ||
+      (github.event_name == 'push' && !contains(github.event.head_commit.message, 'skip ci') && !contains(github.event.head_commit.message, '[skip release]')) ||
+      github.event_name == 'workflow_dispatch'
     steps:
       - name: Checkout
         uses: actions/checkout@v4

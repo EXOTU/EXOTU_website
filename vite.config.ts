@@ -5,12 +5,12 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [
     react(),
-    // Plugin to replace %VITE_SITE_URL% in HTML with default if not set
+    // Plugin to replace __VITE_SITE_URL__ in HTML with default if not set
     {
       name: 'html-env-replace',
       transformIndexHtml(html) {
         const siteUrl = process.env.VITE_SITE_URL || 'https://exotu-website.vercel.app';
-        return html.replace(/%VITE_SITE_URL%/g, siteUrl);
+        return html.replace(/__VITE_SITE_URL__/g, siteUrl);
       },
     },
   ],

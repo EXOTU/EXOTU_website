@@ -15,6 +15,7 @@ jobs:
   validate-commits:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    name: Validate Commits
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -45,6 +46,7 @@ jobs:
   # Job 2: Type Check (runs in parallel)
   typecheck:
     runs-on: ubuntu-latest
+    name: Type Check
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -64,6 +66,7 @@ jobs:
   # Job 3: Lint (runs in parallel)
   lint:
     runs-on: ubuntu-latest
+    name: Lint
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -83,6 +86,7 @@ jobs:
   # Job 4: Security Audit (runs in parallel)
   security-audit:
     runs-on: ubuntu-latest
+    name: Security Audit
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -110,6 +114,9 @@ jobs:
   # Job 5: Build (runs in parallel with checks)
   build:
     runs-on: ubuntu-latest
+    name: Build
+    env:
+      VITE_SITE_URL: ${{ secrets.VITE_SITE_URL || 'https://exotu-website.vercel.app' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -147,6 +154,9 @@ jobs:
     if: github.event_name == 'pull_request'
     needs: build
     runs-on: ubuntu-latest
+    name: Bundle Size
+    env:
+      VITE_SITE_URL: ${{ secrets.VITE_SITE_URL || 'https://exotu-website.vercel.app' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -191,7 +201,7 @@ jobs:
 
   # Job 7: CodeQL Analysis (runs in parallel with other checks)
   codeql-analysis:
-    name: CodeQL Analysis (${{ matrix.language }})
+    name: CodeQL (${{ matrix.language }})
     runs-on: ubuntu-latest
     permissions:
       # required for all workflows
@@ -224,11 +234,32 @@ jobs:
         with:
           category: "/language:${{matrix.language}}"
 
-  # Job 8: Send failure notification (only on failure)
+  # Job 8: All checks complete (waits for all main jobs)
+  all-checks:
+    needs: [typecheck, lint, security-audit, build, codeql-analysis]
+    runs-on: ubuntu-latest
+    name: All Checks Complete
+    if: always()
+    steps:
+      - name: Check status
+        run: |
+          echo "All checks completed"
+          if [ "${{ needs.typecheck.result }}" != "success" ] || \
+             [ "${{ needs.lint.result }}" != "success" ] || \
+             [ "${{ needs.security-audit.result }}" != "success" ] || \
+             [ "${{ needs.build.result }}" != "success" ] || \
+             [ "${{ needs.codeql-analysis.result }}" != "success" ]; then
+            echo "Some checks failed"
+            exit 1
+          fi
+          echo "✓ All checks passed"
+
+  # Job 9: Send failure notification (only on failure)
   notify-failure:
     if: failure()
-    needs: []  # Run on failure of any job, don't wait for specific jobs
+    needs: [all-checks]
     runs-on: ubuntu-latest
+    name: Notify Failure
     steps:
       - name: Send failure email
         uses: dawidd6/action-send-mail@v3
