@@ -301,18 +301,17 @@ const GridDistortion: React.FC<GridDistortionProps> = ({
       >
         EXOTU
       </h1>
-
+      {/* bottom-16 sm:bottom-2 md:bottom-4 lg:bottom-40 */}
       {/* --- Subtitle Chip --- */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30">
+      <div className="absolute bottom-[13%] lg:bottom-[25%] left-1/2 -translate-x-1/2 z-30 min-w-[350px] text-center">
         <span
           className="inline-flex items-center gap-2
                  px-5 py-2.5 rounded-full
-                 text-white text-base font-medium
+                 text-white text-2xl font-bold 
                  bg-white/10 backdrop-blur-md ring-1 ring-white/20
                  shadow-[0_8px_25px_rgba(0,0,0,0.4)]
                  hover:bg-white/15 transition-all duration-300"
         >
-          <span className="inline-block h-2 w-2 rounded-full bg-white/80 animate-pulse" />
           Ontario Tech University Exoskeleton Design Team
         </span>
       </div>
