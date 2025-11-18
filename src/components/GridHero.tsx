@@ -289,13 +289,13 @@ const GridDistortion: React.FC<GridDistortionProps> = ({
       <div
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[55%]
                   w-[70%] aspect-square rounded-full blur-3xl opacity-50
-                  bg-white/20 animate-pulse-slow z-0"
+                  bg-black/50 animate-pulse-slow z-0"
       />
 
       {/* --- Main Title --- */}
       <h1
-        className="absolute inset-0 flex items-center justify-center
-               text-white text-8xl sm:text-9xl font-extrabold tracking-tight z-30
+        className="absolute inset-0 flex items-center justify-center 
+               text-[#c8b6f5] text-8xl sm:text-9xl font-orbitron font-extrabold tracking-tight z-30
                drop-shadow-[0_15px_60px_rgba(0,0,0,1)] 
                [text-shadow:_0_0_25px_rgba(255,255,255,0.5)]"
       >
@@ -307,7 +307,7 @@ const GridDistortion: React.FC<GridDistortionProps> = ({
         <span
           className="inline-flex items-center gap-2
                  px-5 py-2.5 rounded-full
-                 text-white text-2xl font-bold 
+                 text-[#c8b6f5] text-2xl font-extrabold font-orbitron
                  bg-white/10 backdrop-blur-md ring-1 ring-white/20
                  shadow-[0_8px_25px_rgba(0,0,0,0.4)]
                  hover:bg-white/15 transition-all duration-300"

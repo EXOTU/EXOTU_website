@@ -23,9 +23,9 @@ function App() {
           <>
             <GridDistortion
               imageSrc="/RobotArm2.jpg"
-              grid={10}
+              grid={30}
               mouse={0.1}
-              strength={0.15}
+              strength={0.5}
               relaxation={0.9}
               className="custom"
             />
