@@ -13,11 +13,9 @@ export default function JoinPage() {
     experience: '',
   });
 
-  const [waitlistEmail, setWaitlistEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
   const [emailError, setEmailError] = useState('');
-  const [waitlistEmailError, setWaitlistEmailError] = useState('');
 
   const validateEmail = (email: string): boolean => {
     return email.endsWith('@ontariotechu.net');
@@ -109,64 +107,6 @@ Relevant Experience: ${formData.experience || 'Not provided'}
     }
   };
 
-  const handleWaitlistSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setWaitlistEmailError('');
-    setSubmitStatus({ type: null, message: '' });
-
-    // Validate email domain
-    if (!validateEmail(waitlistEmail)) {
-      setWaitlistEmailError('Please use your @ontariotechu.net email address. Personal emails (Gmail, Yahoo, etc.) are not accepted.');
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    let response: Response | null = null;
-
-    try {
-      const formDataObj = new FormData(e.currentTarget);
-      formDataObj.append('access_key', WEB3FORMS_ACCESS_KEY);
-      formDataObj.append('subject', 'EXOTU Waitlist Signup');
-      formDataObj.append('from_name', 'Waitlist Signup');
-      formDataObj.append('from_email', waitlistEmail);
-      formDataObj.append('to', EMAIL_RECIPIENT);
-      formDataObj.append('message', `New waitlist signup from Ontario Tech University Exoskeleton Design Team website.\n\nEmail: ${waitlistEmail}`);
-
-      response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: formDataObj,
-      });
-
-      // If HTTP response is OK (200-299), treat as success since email was sent
-      if (response.ok) {
-        setSubmitStatus({ type: 'success', message: 'Thank you! We\'ve added you to our waitlist and will reach out when applications open.' });
-        setWaitlistEmail('');
-        e.currentTarget.reset();
-      } else {
-        // Try to get error message from response
-        try {
-          const result = await response.json();
-          setSubmitStatus({ type: 'error', message: result.message || 'Something went wrong. Please try again later.' });
-        } catch {
-          setSubmitStatus({ type: 'error', message: 'Something went wrong. Please try again later.' });
-        }
-      }
-    } catch (error) {
-      // If we got a response and it was OK, treat as success even if there was an error
-      if (response && response.ok) {
-        setSubmitStatus({ type: 'success', message: 'Thank you! We\'ve added you to our waitlist and will reach out when applications open.' });
-        setWaitlistEmail('');
-        e.currentTarget.reset();
-      } else {
-        // Network or other errors - but if email was sent, this might be a false negative
-        console.error('Form submission error:', error);
-        setSubmitStatus({ type: 'error', message: 'There was an issue submitting your request. If you received a confirmation, you\'re all set!' });
-      }
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <div className="pt-16 min-h-screen bg-black">
