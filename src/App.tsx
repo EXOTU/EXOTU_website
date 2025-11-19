@@ -11,6 +11,7 @@ import JoinPage from './pages/JoinPage';
 import SponsorsPage from './pages/SponsorsPage';
 import GalleryPage from './pages/GalleryPage';
 import BlogPage from './pages/BlogPage';
+import ContactPage from './pages/ContactPage';
 import Footer from './components/Footer';
 import StructuredData from './components/StructuredData';
 import GridDistortion from './components/GridHero';
@@ -31,9 +32,9 @@ function App() {
             <GridDistortion
               imageSrc="/RobotArm2.jpg"
               grid={30}
-              mouse={0.1}
-              strength={0.5}
-              relaxation={0.9}
+              mouse={0.12}
+              strength={0.6}
+              relaxation={0.92}
               className="custom"
             />
             <Mission />
@@ -49,11 +50,13 @@ function App() {
       case 'join':
         return <JoinPage />;
       case "sponsors":
-        return <SponsorsPage />;
+        return <SponsorsPage onNavigate={setCurrentPage} />;
       case "gallery":
         return <GalleryPage />;
       case "blog":
         return <BlogPage />;
+      case "contact":
+        return <ContactPage onNavigate={setCurrentPage} />;
       default:
         return null;
     }

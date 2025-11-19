@@ -16,6 +16,7 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
     { id: 'projects', label: 'Projects' },
     { id: 'team', label: 'Team' },
     { id: 'join', label: 'Join Us' },
+    { id: 'contact', label: 'Contact Us' },
   ];
 
   const handleNavigate = (page: string) => {

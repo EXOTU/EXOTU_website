@@ -27,7 +27,7 @@ export const SITE_DESCRIPTION = 'EXOTU is a student-led design team at Ontario T
 /**
  * Contact email
  */
-export const CONTACT_EMAIL = 'info@exotu.ca';
+export const CONTACT_EMAIL = 'exo.otu@gmail.com';
 
 /**
  * Social media links
@@ -37,6 +37,7 @@ export const SOCIAL_LINKS = {
   linkedin: 'https://www.linkedin.com/company/exotu',
   twitter: 'https://twitter.com/exotu',
   github: 'https://github.com/EXOTU',
+  instagram: 'https://www.instagram.com/exo.otu/',
 };
 
 /**
