@@ -138,16 +138,16 @@ export default function SponsorsPage() {
 
         {/* Call to action */}
 
-        <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/30 rounded-2xl p-12">
+        <div className="bg-gradient-to-r from-primary-vibrant/10 to-secondary-royal/10 border border-primary-vibrant/30 rounded-2xl p-12">
           <div className="text-center max-w-3xl mx-auto">
-            <Handshake size={48} className="text-blue-400 mx-auto mb-6" />
+            <Handshake size={48} className="text-primary-vibrant mx-auto mb-6" />
             <h2 className="text-3xl font-bold text-white mb-4">Become a Sponsor</h2>
             <p className="text-xl text-gray-300 mb-8">
               Partner with EXOTU to support the next generation of robotics innovators and gain
               access to cutting-edge research in powered exoskeleton technology.
             </p>
             <div className="flex justify-center">
-              <button className="px-8 py-4 bg-transparent border-2 border-blue-500 hover:bg-blue-500/10 text-blue-400 font-semibold rounded-lg transition-all">
+              <button className="px-8 py-4 bg-transparent border-2 border-primary-vibrant hover:bg-primary-vibrant/10 text-primary-vibrant font-semibold rounded-lg transition-all">
                 Contact Partnership Team
               </button>
             </div>

@@ -43,12 +43,12 @@ export default function GalleryPage() {
     <div className="pt-16 min-h-screen bg-black">
       <div className="relative py-24 px-4 bg-gradient-to-b from-gray-900 to-black">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block px-4 py-1 bg-blue-500/10 border border-blue-500/30 rounded-full mb-6">
-            <span className="text-sm text-blue-400 font-medium uppercase tracking-wide">Gallery</span>
+          <div className="inline-block px-4 py-1 bg-primary-vibrant/10 border border-primary-vibrant/30 rounded-full mb-6">
+            <span className="text-sm text-primary-vibrant font-medium uppercase tracking-wide">Gallery</span>
           </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
             Capturing Innovation
-            <span className="block text-blue-400">in Action</span>
+            <span className="block text-primary-vibrant">in Action</span>
           </h1>
           <p className="text-xl text-gray-400 leading-relaxed">
             Explore photos and highlights from our projects, competitions, lab work, and team events.
@@ -59,7 +59,7 @@ export default function GalleryPage() {
       <div className="max-w-7xl mx-auto px-4 py-16">
         {galleryItems.map((section, sectionIndex) => (
           <div key={sectionIndex} className="mb-16">
-            <h2 className="text-3xl font-bold text-white mb-8 border-l-4 border-blue-500 pl-4">
+            <h2 className="text-3xl font-bold text-white mb-8 border-l-4 border-primary-vibrant pl-4">
               {section.category}
             </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -67,7 +67,7 @@ export default function GalleryPage() {
                 <button
                   key={imageIndex}
                   onClick={() => setSelectedImage(image)}
-                  className="group relative aspect-video rounded-xl overflow-hidden border border-gray-800 hover:border-blue-500/50 transition-all"
+                  className="group relative aspect-video rounded-xl overflow-hidden border border-gray-800 hover:border-primary-vibrant/50 transition-all"
                 >
                   <img
                     src={image}
@@ -81,7 +81,7 @@ export default function GalleryPage() {
           </div>
         ))}
 
-        <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/30 rounded-2xl p-12 text-center">
+        <div className="bg-gradient-to-r from-primary-vibrant/10 to-secondary-royal/10 border border-primary-vibrant/30 rounded-2xl p-12 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">Video Highlights</h2>
           <p className="text-xl text-gray-300 mb-8">
             Check out our competition performances and project demonstrations
