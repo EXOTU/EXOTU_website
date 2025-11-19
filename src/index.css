@@ -1,3 +1,66 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Smooth Scrolling */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 4rem; /* Account for fixed navbar */
+  }
+
+  body {
+    scroll-behavior: smooth;
+  }
+
+  /* Enhanced smooth scrolling with custom easing */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    
+    body {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/* Custom scrollbar styling */
+@layer base {
+  /* Webkit browsers (Chrome, Safari, Edge) */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #000000;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #5e38dc;
+    border-radius: 5px;
+    border: 2px solid #000000;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #675ac3;
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #5e38dc #000000;
+  }
+}

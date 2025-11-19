@@ -20,6 +20,10 @@ export default {
         iceberg: ["Iceberg", "sans-serif"],
         orbitron: ["Orbitron", "sans-serif"],
       },
+      animation: {
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
     },
   },
   plugins: [],

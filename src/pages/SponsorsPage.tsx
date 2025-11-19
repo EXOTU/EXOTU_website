@@ -1,7 +1,11 @@
 import { Handshake } from 'lucide-react';
 import { platinum, gold, silver, bronze } from '../data/sponsors';
 
-export default function SponsorsPage() {
+interface SponsorsPageProps {
+  onNavigate: (page: string) => void;
+}
+
+export default function SponsorsPage({ onNavigate }: SponsorsPageProps) {
   const SponsorCard = ({ name, tier }: { name: string; tier: 'platinum' | 'gold' | 'silver' | 'bronze' }) => {
     const base =
       'relative rounded-2xl p-8 transition-all duration-300 backdrop-blur-sm border group focus-within:-translate-y-1 outline-none';
@@ -147,7 +151,10 @@ export default function SponsorsPage() {
               access to cutting-edge research in powered exoskeleton technology.
             </p>
             <div className="flex justify-center">
-              <button className="px-8 py-4 bg-transparent border-2 border-primary-vibrant hover:bg-primary-vibrant/10 text-primary-vibrant font-semibold rounded-lg transition-all">
+              <button 
+                onClick={() => onNavigate('contact')}
+                className="px-8 py-4 bg-transparent border-2 border-primary-vibrant hover:bg-primary-vibrant/10 text-primary-vibrant font-semibold rounded-lg transition-all"
+              >
                 Contact Partnership Team
               </button>
             </div>

@@ -52,7 +52,7 @@ export default function Footer({ onNavigate }: FooterProps) {
           <div>
             <h3 className="text-white font-semibold mb-4">Get Involved</h3>
             <ul className="space-y-2">
-              {['join', 'sponsors'].map((page) => (
+              {['join', 'sponsors', 'contact'].map((page) => (
                 <li key={page}>
                   <button
                     onClick={() => onNavigate(page)}
