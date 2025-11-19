@@ -30,10 +30,10 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
         <div className="flex justify-between items-center h-16">
           <button
             onClick={() => handleNavigate('home')}
-            className="text-2xl font-bold tracking-tight hover:text-blue-400 transition-colors"
+            className="text-2xl font-bold tracking-tight hover:text-primary-vibrant transition-colors"
           >
             <span className="text-white">EX</span>
-            <span className="text-blue-400">OTU</span>
+            <span className="text-primary-vibrant">OTU</span>
           </button>
 
           <div className="hidden md:flex items-center space-x-1">
@@ -43,7 +43,7 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
                 onClick={() => handleNavigate(item.id)}
                 className={`px-4 py-2 text-sm font-medium transition-all ${
                   currentPage === item.id
-                    ? 'text-blue-400 border-b-2 border-blue-400'
+                    ? 'text-primary-vibrant border-b-2 border-primary-vibrant'
                     : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
                 }`}
               >
@@ -70,7 +70,7 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
                 onClick={() => handleNavigate(item.id)}
                 className={`block w-full text-left px-4 py-3 text-sm font-medium transition-all ${
                   currentPage === item.id
-                    ? 'text-blue-400 bg-gray-800/50'
+                    ? 'text-primary-vibrant bg-gray-800/50'
                     : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
                 }`}
               >

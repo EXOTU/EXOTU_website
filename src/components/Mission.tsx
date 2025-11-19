@@ -1,13 +1,12 @@
-import { missionStatement, missionTitle, missionValues } from '../data/mission';
+import { missionStatement, missionTitle, missionValues } from "../data/mission";
 
 export default function Mission() {
-
   return (
-    <section className="py-24 px-4 bg-gradient-to-b from-black to-gray-900">
+    <section className="py-24 px-4 bg-black">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-1 bg-blue-500/10 border border-blue-500/30 rounded-full mb-4">
-            <span className="text-sm text-blue-400 font-medium uppercase tracking-wide">Mission Statement</span>
+          <div className="inline-block px-4 py-1 bg-primary-vibrant/10 border border-primary-vibrant/30 rounded-full mb-4">
+            <span className="text-sm text-primary-vibrant font-medium uppercase tracking-wide">Mission Statement</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
             {missionTitle}
@@ -21,13 +20,17 @@ export default function Mission() {
           {missionValues.map((value, index) => (
             <div
               key={index}
-              className="group p-6 bg-gray-900/50 border border-gray-800 hover:border-blue-500/50 rounded-xl transition-all hover:-translate-y-2"
+              className="group p-6 bg-gray-900/50 border border-gray-800 hover:border-primary-vibrant/50 rounded-xl transition-all hover:-translate-y-2"
             >
-              <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-colors">
-                <value.icon size={24} className="text-blue-400" />
+              <div className="w-12 h-12 bg-primary-vibrant/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary-vibrant/20 transition-colors">
+                <value.icon size={24} className="text-primary-vibrant" />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-white">{value.title}</h3>
-              <p className="text-gray-400 leading-relaxed">{value.description}</p>
+              <h3 className="text-xl font-semibold mb-2 text-white">
+                {value.title}
+              </h3>
+              <p className="text-gray-400 leading-relaxed">
+                {value.description}
+              </p>
             </div>
           ))}
         </div>

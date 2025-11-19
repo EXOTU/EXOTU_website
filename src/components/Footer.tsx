@@ -12,22 +12,22 @@ export default function Footer({ onNavigate }: FooterProps) {
           <div className="col-span-2">
             <div className="text-2xl font-bold mb-4">
               <span className="text-white">EX</span>
-              <span className="text-blue-400">OTU</span>
+              <span className="text-primary-vibrant">OTU</span>
             </div>
             <p className="text-gray-400 mb-4 max-w-md">
               Engineering the future of human potential through innovative powered exoskeleton technology.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-blue-500 rounded-lg flex items-center justify-center transition-colors">
+              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-primary-vibrant rounded-lg flex items-center justify-center transition-colors">
                 <Mail size={20} className="text-gray-300" />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-blue-500 rounded-lg flex items-center justify-center transition-colors">
+              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-primary-vibrant rounded-lg flex items-center justify-center transition-colors">
                 <Linkedin size={20} className="text-gray-300" />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-blue-500 rounded-lg flex items-center justify-center transition-colors">
+              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-primary-vibrant rounded-lg flex items-center justify-center transition-colors">
                 <Twitter size={20} className="text-gray-300" />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-blue-500 rounded-lg flex items-center justify-center transition-colors">
+              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-primary-vibrant rounded-lg flex items-center justify-center transition-colors">
                 <Github size={20} className="text-gray-300" />
               </a>
             </div>
@@ -40,7 +40,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 <li key={page}>
                   <button
                     onClick={() => onNavigate(page)}
-                    className="text-gray-400 hover:text-blue-400 transition-colors capitalize"
+                    className="text-gray-400 hover:text-primary-vibrant transition-colors capitalize"
                   >
                     {page}
                   </button>
@@ -56,7 +56,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 <li key={page}>
                   <button
                     onClick={() => onNavigate(page)}
-                    className="text-gray-400 hover:text-blue-400 transition-colors capitalize"
+                    className="text-gray-400 hover:text-primary-vibrant transition-colors capitalize"
                   >
                     {page}
                   </button>
