@@ -22,7 +22,10 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
   const handleNavigate = (page: string) => {
     onNavigate(page);
     setIsOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Smooth scroll is handled by App.tsx useEffect, but we ensure it here too
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 0);
   };
 
   return (

@@ -1,44 +1,48 @@
 import { projects } from '../data/projects';
 import AnimatedProgressBar from '../components/AnimatedProgressBar';
+import ScrollAnimation from '../components/ScrollAnimation';
+import HoverCard from '../components/HoverCard';
+import LazyImage from '../components/LazyImage';
 
 export default function ProjectsPage() {
 
   return (
     <div className="pt-16 min-h-screen bg-black">
       <div className="relative py-24 px-4 bg-gradient-to-b from-gray-900 to-black">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
-            Building Tomorrow's Technology
-            <span className="block text-primary-vibrant">Today</span>
-          </h1>
-          <p className="text-xl text-gray-400 leading-relaxed">
-            From concept to competition, explore our cutting-edge exoskeleton projects
-            and research initiatives pushing the boundaries of human augmentation.
-          </p>
-        </div>
+        <ScrollAnimation animation="fadeIn" delay={0}>
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
+              Building Tomorrow's Technology
+              <span className="block text-primary-vibrant">Today</span>
+            </h1>
+            <p className="text-xl text-gray-400 leading-relaxed">
+              From concept to competition, explore our cutting-edge exoskeleton projects
+              and research initiatives pushing the boundaries of human augmentation.
+            </p>
+          </div>
+        </ScrollAnimation>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-16">
         <div className="grid gap-12">
           {projects.map((project, index) => (
-            <div
-              key={index}
-              className="group bg-gray-900/50 border border-gray-800 hover:border-primary-vibrant/50 rounded-2xl overflow-hidden transition-all"
-            >
-              <div className="grid md:grid-cols-5 gap-8 p-8">
-                <div className="md:col-span-2">
-                  <div className="relative h-64 md:h-full rounded-xl overflow-hidden">
-                    <img
-                      src={project.image}
-                      alt={project.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-4 left-4 flex items-center space-x-2 px-3 py-1 bg-primary-vibrant/90 rounded-full">
-                      <project.icon size={16} className="text-white" />
-                      <span className="text-sm font-medium text-white">{project.category}</span>
+            <ScrollAnimation key={index} animation="slideUp" delay={index * 150}>
+              <HoverCard tiltIntensity={2}>
+                <div className="group bg-gray-900/50 border border-gray-800 hover:border-primary-vibrant/50 rounded-2xl overflow-hidden transition-all">
+                  <div className="grid md:grid-cols-5 gap-8 p-8">
+                    <div className="md:col-span-2">
+                      <div className="relative h-64 md:h-full rounded-xl overflow-hidden">
+                        <LazyImage
+                          src={project.image}
+                          alt={project.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute top-4 left-4 flex items-center space-x-2 px-3 py-1 bg-primary-vibrant/90 rounded-full">
+                          <project.icon size={16} className="text-white" />
+                          <span className="text-sm font-medium text-white">{project.category}</span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
 
                 <div className="md:col-span-3 flex flex-col justify-between">
                   <div>
@@ -86,7 +90,9 @@ export default function ProjectsPage() {
                   <AnimatedProgressBar progress={project.progress} label="Development Progress" />
                 </div>
               </div>
-            </div>
+                </div>
+              </HoverCard>
+            </ScrollAnimation>
           ))}
         </div>
       </div>

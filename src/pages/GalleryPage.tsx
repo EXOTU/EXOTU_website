@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
+import ScrollAnimation from '../components/ScrollAnimation';
+import LazyImage from '../components/LazyImage';
 
 export default function GalleryPage() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -42,54 +44,65 @@ export default function GalleryPage() {
   return (
     <div className="pt-16 min-h-screen bg-black">
       <div className="relative py-24 px-4 bg-gradient-to-b from-gray-900 to-black">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block px-4 py-1 bg-primary-vibrant/10 border border-primary-vibrant/30 rounded-full mb-6">
-            <span className="text-sm text-primary-vibrant font-medium uppercase tracking-wide">Gallery</span>
+        <ScrollAnimation animation="fadeIn" delay={0}>
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-block px-4 py-1 bg-primary-vibrant/10 border border-primary-vibrant/30 rounded-full mb-6">
+              <span className="text-sm text-primary-vibrant font-medium uppercase tracking-wide">Gallery</span>
+            </div>
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
+              Capturing Innovation
+              <span className="block text-primary-vibrant">in Action</span>
+            </h1>
+            <p className="text-xl text-gray-400 leading-relaxed">
+              Explore photos and highlights from our projects, competitions, lab work, and team events.
+            </p>
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
-            Capturing Innovation
-            <span className="block text-primary-vibrant">in Action</span>
-          </h1>
-          <p className="text-xl text-gray-400 leading-relaxed">
-            Explore photos and highlights from our projects, competitions, lab work, and team events.
-          </p>
-        </div>
+        </ScrollAnimation>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-16">
         {galleryItems.map((section, sectionIndex) => (
-          <div key={sectionIndex} className="mb-16">
-            <h2 className="text-3xl font-bold text-white mb-8 border-l-4 border-primary-vibrant pl-4">
-              {section.category}
-            </h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {section.images.map((image, imageIndex) => (
-                <button
-                  key={imageIndex}
-                  onClick={() => setSelectedImage(image)}
-                  className="group relative aspect-video rounded-xl overflow-hidden border border-gray-800 hover:border-primary-vibrant/50 transition-all"
-                >
-                  <img
-                    src={image}
-                    alt={`${section.category} ${imageIndex + 1}`}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors" />
-                </button>
-              ))}
+          <ScrollAnimation key={sectionIndex} animation="fadeIn" delay={sectionIndex * 100}>
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-white mb-8 border-l-4 border-primary-vibrant pl-4">
+                {section.category}
+              </h2>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {section.images.map((image, imageIndex) => (
+                  <ScrollAnimation 
+                    key={imageIndex} 
+                    animation="scale" 
+                    delay={imageIndex * 50}
+                  >
+                    <button
+                      onClick={() => setSelectedImage(image)}
+                      className="group relative aspect-video rounded-xl overflow-hidden border border-gray-800 hover:border-primary-vibrant/50 transition-all"
+                    >
+                      <LazyImage
+                        src={image}
+                        alt={`${section.category} ${imageIndex + 1}`}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors" />
+                    </button>
+                  </ScrollAnimation>
+                ))}
+              </div>
             </div>
-          </div>
+          </ScrollAnimation>
         ))}
 
-        <div className="bg-gradient-to-r from-primary-vibrant/10 to-secondary-royal/10 border border-primary-vibrant/30 rounded-2xl p-12 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">Video Highlights</h2>
-          <p className="text-xl text-gray-300 mb-8">
-            Check out our competition performances and project demonstrations
-          </p>
-          <div className="aspect-video max-w-4xl mx-auto bg-gray-900 rounded-xl border border-gray-800 flex items-center justify-center">
-            <p className="text-gray-500">Video player placeholder</p>
+        <ScrollAnimation animation="fadeIn" delay={0}>
+          <div className="bg-gradient-to-r from-primary-vibrant/10 to-secondary-royal/10 border border-primary-vibrant/30 rounded-2xl p-12 text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">Video Highlights</h2>
+            <p className="text-xl text-gray-300 mb-8">
+              Check out our competition performances and project demonstrations
+            </p>
+            <div className="aspect-video max-w-4xl mx-auto bg-gray-900 rounded-xl border border-gray-800 flex items-center justify-center">
+              <p className="text-gray-500">Video player placeholder</p>
+            </div>
           </div>
-        </div>
+        </ScrollAnimation>
       </div>
 
       {selectedImage && (
