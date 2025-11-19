@@ -278,7 +278,7 @@ const GridDistortion: React.FC<GridDistortionProps> = ({
       className={`relative overflow-hidden
               h-[auto] aspect-[2/3] sm:h-auto sm:aspect-[16/10] md:aspect-[16/9]
               ${className}
-              border-black shadow-[0_40px_120px_rgba(0,0,0,0.7)] ring-1 ring-black/10`}
+              shadow-[0_40px_120px_rgba(0,0,0,0.7)]`}
     >
       {/* --- Background Overlays --- */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-0" />
@@ -318,8 +318,8 @@ const GridDistortion: React.FC<GridDistortionProps> = ({
 
       {/* --- Ambient gradient reflection bottom --- */}
       <div
-        className="absolute bottom-0 inset-x-0 h-[40%]
-                  bg-gradient-to-t from-black/70 via-black/40 to-transparent z-10"
+        className="absolute bottom-0 inset-x-0 h-[50%]
+                  bg-gradient-to-t from-black via-black/80 via-black/40 to-transparent z-10"
       />
     </div>
   );
