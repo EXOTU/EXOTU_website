@@ -112,12 +112,12 @@ Relevant Experience: ${formData.experience || 'Not provided'}
     <div className="pt-16 min-h-screen bg-black">
       <div className="relative py-24 px-4 bg-gradient-to-b from-gray-900 to-black">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block px-4 py-1 bg-blue-500/10 border border-blue-500/30 rounded-full mb-6">
-            <span className="text-sm text-blue-400 font-medium uppercase tracking-wide">Join EXOTU</span>
+          <div className="inline-block px-4 py-1 bg-primary-vibrant/10 border border-primary-vibrant/30 rounded-full mb-6">
+            <span className="text-sm text-primary-vibrant font-medium uppercase tracking-wide">Join EXOTU</span>
           </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
             Be Part of Something
-            <span className="block text-blue-400">Extraordinary</span>
+            <span className="block text-primary-vibrant">Extraordinary</span>
           </h1>
           <p className="text-xl text-gray-400 leading-relaxed">
             Join a team of passionate engineers and researchers building the future of human augmentation.
@@ -133,7 +133,7 @@ Relevant Experience: ${formData.experience || 'Not provided'}
             <div className="space-y-3">
               {benefits.map((benefit, index) => (
                 <div key={index} className="flex items-start space-x-3">
-                  <CheckCircle size={20} className="text-blue-400 mt-1 flex-shrink-0" />
+                  <CheckCircle size={20} className="text-primary-vibrant mt-1 flex-shrink-0" />
                   <span className="text-gray-300">{benefit}</span>
                 </div>
               ))}
@@ -158,7 +158,7 @@ Relevant Experience: ${formData.experience || 'Not provided'}
             {APPLICATION_OPEN ? (
               <>
                 <div className="text-center mb-8">
-                  <Users size={48} className="text-blue-400 mx-auto mb-4" />
+                  <Users size={48} className="text-primary-vibrant mx-auto mb-4" />
                   <h2 className="text-3xl font-bold text-white mb-2">Application Form</h2>
                   <p className="text-gray-400">
                     Fill out the form below and we'll get back to you within 48 hours
@@ -177,7 +177,7 @@ Relevant Experience: ${formData.experience || 'Not provided'}
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none"
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-primary-vibrant focus:outline-none"
                     placeholder="John Doe"
                   />
                 </div>
@@ -196,7 +196,7 @@ Relevant Experience: ${formData.experience || 'Not provided'}
                       setEmailError('');
                     }}
                     className={`w-full px-4 py-3 bg-gray-800 border rounded-lg text-white placeholder-gray-500 focus:outline-none ${
-                      emailError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-blue-500'
+                      emailError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary-vibrant'
                     }`}
                     placeholder="your.name@ontariotechu.net"
                     pattern="[a-zA-Z0-9._%+-]+@ontariotechu\.net"
@@ -222,7 +222,7 @@ Relevant Experience: ${formData.experience || 'Not provided'}
                     required
                     value={formData.major}
                     onChange={(e) => setFormData({ ...formData, major: e.target.value })}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none"
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-primary-vibrant focus:outline-none"
                     placeholder="Mechanical Engineering"
                   />
                 </div>
@@ -236,7 +236,7 @@ Relevant Experience: ${formData.experience || 'Not provided'}
                     required
                     value={formData.year}
                     onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:border-blue-500 focus:outline-none"
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:border-primary-vibrant focus:outline-none"
                   >
                     <option value="">Select year</option>
                     <option value="freshman">Freshman</option>
@@ -258,7 +258,7 @@ Relevant Experience: ${formData.experience || 'Not provided'}
                   value={formData.interests}
                   onChange={(e) => setFormData({ ...formData, interests: e.target.value })}
                   rows={3}
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none resize-none"
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-primary-vibrant focus:outline-none resize-none"
                   placeholder="e.g., Mechanical design, control systems, machine learning, etc."
                 />
               </div>
@@ -272,7 +272,7 @@ Relevant Experience: ${formData.experience || 'Not provided'}
                   value={formData.experience}
                   onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
                   rows={4}
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none resize-none"
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-primary-vibrant focus:outline-none resize-none"
                   placeholder="Tell us about any relevant coursework, projects, or experience..."
                 />
               </div>
@@ -289,7 +289,7 @@ Relevant Experience: ${formData.experience || 'Not provided'}
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full px-8 py-4 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all transform hover:scale-[1.02] flex items-center justify-center space-x-2"
+                    className="w-full px-8 py-4 bg-primary-vibrant hover:bg-primary-muted disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all transform hover:scale-[1.02] flex items-center justify-center space-x-2"
                   >
                     <Mail size={20} />
                     <span>{isSubmitting ? 'Submitting...' : 'Submit Application'}</span>
@@ -298,7 +298,7 @@ Relevant Experience: ${formData.experience || 'Not provided'}
               </>
             ) : (
               <div className="text-center">
-                <Users size={48} className="text-blue-400 mx-auto mb-4" />
+                <Users size={48} className="text-primary-vibrant mx-auto mb-4" />
                 <h2 className="text-3xl font-bold text-white mb-4">Thank You for Your Interest</h2>
                 <p className="text-gray-300 text-lg leading-relaxed">
                   Thank you for your interest in the Ontario Tech University Exoskeleton Design Team, unfortunately we aren't onboarding at the moment. See you soon!

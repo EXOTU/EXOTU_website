@@ -11,7 +11,7 @@ export default function AboutPage({ onNavigate }: AboutPageProps) {
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
             Pioneering the Next Generation of
-            <span className="block text-blue-400">Human Augmentation</span>
+            <span className="block text-primary-vibrant">Human Augmentation</span>
           </h1>
           <p className="text-xl text-gray-400 leading-relaxed">
             Founded by passionate engineers and researchers, EXOTU is a university-based organization
@@ -55,8 +55,8 @@ export default function AboutPage({ onNavigate }: AboutPageProps) {
             { icon: BookOpen, title: 'Research-Driven', description: 'Academic rigor meets practical engineering' },
           ].map((item, index) => (
             <div key={index} className="text-center p-6 bg-gray-900/50 border border-gray-800 rounded-xl">
-              <div className="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <item.icon size={28} className="text-blue-400" />
+              <div className="w-16 h-16 bg-primary-vibrant/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <item.icon size={28} className="text-primary-vibrant" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-2">{item.title}</h3>
               <p className="text-sm text-gray-400">{item.description}</p>
@@ -64,7 +64,7 @@ export default function AboutPage({ onNavigate }: AboutPageProps) {
           ))}
         </div>
 
-        <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/30 rounded-2xl p-12 text-center">
+        <div className="bg-gradient-to-r from-primary-vibrant/10 to-secondary-royal/10 border border-primary-vibrant/30 rounded-2xl p-12 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">Join Our Mission</h2>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
             We're always looking for passionate students and industry partners
@@ -73,13 +73,13 @@ export default function AboutPage({ onNavigate }: AboutPageProps) {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button 
               onClick={() => onNavigate('join')}
-              className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition-all"
+              className="px-8 py-4 bg-primary-vibrant hover:bg-primary-muted text-white font-semibold rounded-lg transition-all"
             >
               Become a Member
             </button>
             <button 
               onClick={() => onNavigate('sponsors')}
-              className="px-8 py-4 bg-transparent border-2 border-blue-500 hover:bg-blue-500/10 text-blue-400 font-semibold rounded-lg transition-all"
+              className="px-8 py-4 bg-transparent border-2 border-primary-vibrant hover:bg-primary-vibrant/10 text-primary-vibrant font-semibold rounded-lg transition-all"
             >
               Partner With Us
             </button>

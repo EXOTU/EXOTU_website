@@ -46,12 +46,12 @@ export default function BlogPage() {
     <div className="pt-16 min-h-screen bg-black">
       <div className="relative py-24 px-4 bg-gradient-to-b from-gray-900 to-black">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block px-4 py-1 bg-blue-500/10 border border-blue-500/30 rounded-full mb-6">
-            <span className="text-sm text-blue-400 font-medium uppercase tracking-wide">Research Updates</span>
+          <div className="inline-block px-4 py-1 bg-primary-vibrant/10 border border-primary-vibrant/30 rounded-full mb-6">
+            <span className="text-sm text-primary-vibrant font-medium uppercase tracking-wide">Research Updates</span>
           </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
             Latest Insights &
-            <span className="block text-blue-400">Technical Articles</span>
+            <span className="block text-primary-vibrant">Technical Articles</span>
           </h1>
           <p className="text-xl text-gray-400 leading-relaxed">
             Stay updated with our latest research findings, competition results, and technical developments
@@ -65,7 +65,7 @@ export default function BlogPage() {
           {categories.map((category) => (
             <button
               key={category}
-              className="px-4 py-2 bg-gray-900 border border-gray-800 hover:border-blue-500/50 text-gray-300 hover:text-white rounded-lg transition-all"
+              className="px-4 py-2 bg-gray-900 border border-gray-800 hover:border-primary-vibrant/50 text-gray-300 hover:text-white rounded-lg transition-all"
             >
               {category}
             </button>
@@ -76,7 +76,7 @@ export default function BlogPage() {
           {posts.map((post, index) => (
             <article
               key={index}
-              className="group bg-gray-900/50 border border-gray-800 hover:border-blue-500/50 rounded-xl overflow-hidden transition-all hover:-translate-y-2"
+              className="group bg-gray-900/50 border border-gray-800 hover:border-primary-vibrant/50 rounded-xl overflow-hidden transition-all hover:-translate-y-2"
             >
               <div className="relative h-64 overflow-hidden">
                 <img
@@ -86,7 +86,7 @@ export default function BlogPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent" />
                 <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 bg-blue-500/90 text-white text-sm font-medium rounded-full">
+                  <span className="px-3 py-1 bg-primary-vibrant/90 text-white text-sm font-medium rounded-full">
                     {post.category}
                   </span>
                 </div>
@@ -105,7 +105,7 @@ export default function BlogPage() {
                   <span>{post.readTime}</span>
                 </div>
 
-                <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
+                <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-primary-vibrant transition-colors">
                   {post.title}
                 </h2>
 
@@ -113,7 +113,7 @@ export default function BlogPage() {
                   {post.excerpt}
                 </p>
 
-                <button className="flex items-center space-x-2 text-blue-400 font-semibold group-hover:text-blue-300 transition-colors">
+                <button className="flex items-center space-x-2 text-primary-vibrant font-semibold group-hover:text-secondary-light transition-colors">
                   <span>Read Full Article</span>
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -123,7 +123,7 @@ export default function BlogPage() {
         </div>
 
         <div className="mt-12 text-center">
-          <button className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition-all">
+          <button className="px-8 py-4 bg-primary-vibrant hover:bg-primary-muted text-white font-semibold rounded-lg transition-all">
             Load More Articles
           </button>
         </div>

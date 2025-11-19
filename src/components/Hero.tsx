@@ -60,11 +60,11 @@ export default function Hero() {
     const hsl = (h: number, s: number, l: number, a = 1) => `hsla(${h}, ${s}%, ${l}%, ${a})`;
 
     const gradientBg = (x: number, y: number, r: number) => {
-      // Map horizontal position to hue from red (10deg) to green (140deg)
+      // Map horizontal position to hue from purple (260deg) to blue-purple (280deg)
       const t = Math.max(0, Math.min(1, x / Math.max(1, winW)));
-      const hue = 10 + t * 130;
+      const hue = 260 + t * 20;
       const bg = context.createRadialGradient(x - r / 3, y - r / 7, 0, x, y, r);
-      // Bright colored core fading to darker same hue, then to black
+      // Bright purple core fading to darker same hue, then to dark navy
       bg.addColorStop(0.0, hsl(hue, 100, 60, 1));
       bg.addColorStop(0.55, hsl(hue, 100, 45, 0.85));
       bg.addColorStop(0.95, 'rgba(0,0,0,0.95)');
@@ -132,7 +132,7 @@ export default function Hero() {
       <div className="relative z-10 h-full flex items-center">
         <div className="px-6 sm:px-10">
           <h1 className="font-extrabold tracking-tight leading-none text-[16vw] sm:text-[12vw] md:text-[10vw] text-white drop-shadow-[0_10px_25px_rgba(0,0,0,0.6)]">
-            EX<span className="text-blue-400">OTU</span>
+            EX<span className="text-primary-vibrant">OTU</span>
           </h1>
         </div>
       </div>
