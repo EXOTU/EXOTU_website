@@ -59,30 +59,18 @@ export default function ProjectsPage() {
                       {project.description}
                     </p>
 
-                    {(project.specs || project.team) && (
-                      <div className="grid sm:grid-cols-2 gap-4 mb-6">
-                        {project.specs && (
-                          <div>
-                            <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                              Technical Specs
-                            </h4>
-                            <ul className="space-y-1">
-                              {project.specs.map((spec, i) => (
-                                <li key={i} className="text-sm text-gray-300">
-                                  • {spec}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                        {project.team && (
-                          <div>
-                            <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                              Team Disciplines
-                            </h4>
-                            <p className="text-sm text-gray-300">{project.team}</p>
-                          </div>
-                        )}
+                    {project.specs && (
+                      <div className="mb-6">
+                        <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                          Technical Specs
+                        </h4>
+                        <ul className="space-y-1">
+                          {project.specs.map((spec, i) => (
+                            <li key={i} className="text-sm text-gray-300">
+                              • {spec}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     )}
                   </div>

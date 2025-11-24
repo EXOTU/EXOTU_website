@@ -1,4 +1,5 @@
-import { Mail, Linkedin, Twitter, Github } from 'lucide-react';
+import { Mail, Linkedin, Instagram } from 'lucide-react';
+import { CONTACT_EMAIL, SOCIAL_LINKS } from '../config/site';
 
 interface FooterProps {
   onNavigate: (page: string) => void;
@@ -18,17 +19,30 @@ export default function Footer({ onNavigate }: FooterProps) {
               Engineering the future of human potential through innovative powered exoskeleton technology.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-primary-vibrant rounded-lg flex items-center justify-center transition-colors">
+              <a 
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="w-10 h-10 bg-gray-800 hover:bg-primary-vibrant rounded-lg flex items-center justify-center transition-colors"
+                aria-label="Email us"
+              >
                 <Mail size={20} className="text-gray-300" />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-primary-vibrant rounded-lg flex items-center justify-center transition-colors">
+              <a 
+                href={SOCIAL_LINKS.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-gray-800 hover:bg-primary-vibrant rounded-lg flex items-center justify-center transition-colors"
+                aria-label="Visit our LinkedIn"
+              >
                 <Linkedin size={20} className="text-gray-300" />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-primary-vibrant rounded-lg flex items-center justify-center transition-colors">
-                <Twitter size={20} className="text-gray-300" />
-              </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-primary-vibrant rounded-lg flex items-center justify-center transition-colors">
-                <Github size={20} className="text-gray-300" />
+              <a 
+                href={SOCIAL_LINKS.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-gray-800 hover:bg-primary-vibrant rounded-lg flex items-center justify-center transition-colors"
+                aria-label="Follow us on Instagram"
+              >
+                <Instagram size={20} className="text-gray-300" />
               </a>
             </div>
           </div>
@@ -64,10 +78,6 @@ export default function Footer({ onNavigate }: FooterProps) {
               ))}
             </ul>
           </div>
-        </div>
-
-        <div className="pt-8 border-t border-gray-800 text-center text-gray-400 text-sm">
-          <p>&copy; {new Date().getFullYear()} EXOTU. All rights reserved.</p>
         </div>
       </div>
     </footer>

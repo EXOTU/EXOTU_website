@@ -43,9 +43,9 @@ export const SOCIAL_LINKS = {
 /**
  * Open Graph image path
  * Should be relative to the public folder
- * Example: '/images/og-image.jpg'
+ * Example: '/images/logo/og-image.jpg'
  */
-export const OG_IMAGE_PATH = '/images/og-image.jpg';
+export const OG_IMAGE_PATH = '/images/logo/og-image.jpg';
 
 /**
  * Logo path

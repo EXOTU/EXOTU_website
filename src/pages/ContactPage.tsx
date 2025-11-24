@@ -13,9 +13,6 @@ export default function ContactPage({ onNavigate }: ContactPageProps) {
       <div className="relative py-24 px-4 bg-gradient-to-b from-gray-900 to-black">
         <ScrollAnimation animation="fadeIn" delay={0}>
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-block px-4 py-1 bg-primary-vibrant/10 border border-primary-vibrant/30 rounded-full mb-6">
-              <span className="text-sm text-primary-vibrant font-medium uppercase tracking-wide">Get In Touch</span>
-            </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
               Contact
               <span className="block text-primary-vibrant">EXOTU</span>
@@ -165,12 +162,14 @@ export default function ContactPage({ onNavigate }: ContactPageProps) {
                       <span>Access to talented engineering students</span>
                     </li>
                   </ul>
-                  <button
-                    onClick={() => onNavigate('sponsors')}
+                  <a
+                    href="/EXOTU Sponsorship Package.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="mt-6 inline-block px-6 py-3 bg-primary-vibrant hover:bg-primary-muted text-white font-semibold rounded-lg transition-all transform hover:scale-[1.02]"
                   >
                     Learn More About Sponsorship
-                  </button>
+                  </a>
                 </div>
               </HoverCard>
             </ScrollAnimation>

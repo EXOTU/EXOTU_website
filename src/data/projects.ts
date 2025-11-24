@@ -13,7 +13,6 @@ export interface Project {
   
   // Detailed info (for full project page)
   specs?: string[];
-  team?: string;
 }
 
 // ============================================
@@ -21,21 +20,21 @@ export interface Project {
 // ============================================
 export const projects: Project[] = [
   {
-    name: 'APEX-1 Full Body Exoskeleton',
+    name: 'APEX-1',
     category: 'Flagship',
     categoryDisplay: 'Flagship Project',
-    description: 'Advanced full-body powered exoskeleton designed for heavy lifting applications and endurance enhancement.',
+    description: 'Advanced lower-body powered exoskeleton designed for heavy lifting applications and endurance enhancement.',
     progress: 40,
     status: 'In Development',
-    image: 'https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: '/images/gallery/lower-body.png',
     icon: Shield,
     specs: [
-      'Max Load Capacity: 150 kg',
-      'Battery Life: 8 hours',
-      'Weight: 45 kg',
-      'Actuators: 12 DOF',
+      'Max Joint Power: 1 kW per joint',
+      'Operating Voltage: ≤ 59 V DC',
+      'Payload Capacity: 50 lb (ACE hard-exo standard)',
+      'Adjustable Fit: Supports 5th–95th percentile body sizes',
+      'Safety Systems: Dual E-Stops + 30-sec battery ejection mechanism',
     ],
-    team: 'Mechanical, Electrical, Software',
   },
   // Add more projects here as needed:
   // {
@@ -48,7 +47,6 @@ export const projects: Project[] = [
   //   image: 'image-url',
   //   icon: Shield, // Import additional icons from 'lucide-react' if needed
   //   specs: ['Spec 1', 'Spec 2'],
-  //   team: 'Team disciplines',
   // },
 ];
 

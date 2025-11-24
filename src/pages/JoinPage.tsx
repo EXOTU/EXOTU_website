@@ -112,9 +112,6 @@ Relevant Experience: ${formData.experience || 'Not provided'}
     <div className="pt-16 min-h-screen bg-black">
       <div className="relative py-24 px-4 bg-gradient-to-b from-gray-900 to-black">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block px-4 py-1 bg-primary-vibrant/10 border border-primary-vibrant/30 rounded-full mb-6">
-            <span className="text-sm text-primary-vibrant font-medium uppercase tracking-wide">Join EXOTU</span>
-          </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
             Be Part of Something
             <span className="block text-primary-vibrant">Extraordinary</span>

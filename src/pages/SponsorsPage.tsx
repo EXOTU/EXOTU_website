@@ -21,7 +21,15 @@ export default function SponsorsPage({ onNavigate }: SponsorsPageProps) {
     } as const;
     const hoverScale = tier === 'platinum' ? 'hover:-translate-y-2 hover:scale-[1.02]' : tier === 'gold' ? 'hover:-translate-y-1.5 hover:scale-[1.01]' : tier === 'silver' ? 'hover:-translate-y-1.5 hover:scale-[1.01]' : 'hover:-translate-y-1';
     const ringColor = tier === 'platinum' ? 'group-hover:ring-cyan-300/30' : tier === 'gold' ? 'group-hover:ring-yellow-300/20' : tier === 'silver' ? 'group-hover:ring-gray-300/15' : 'group-hover:ring-orange-200/10';
-    const textSize = tier === 'platinum' ? 'text-3xl md:text-4xl lg:text-5xl' : tier === 'gold' ? 'text-lg md:text-xl lg:text-2xl' : tier === 'silver' ? 'text-xl md:text-2xl lg:text-3xl' : 'text-xl md:text-2xl lg:text-3xl';
+    // Dynamic text sizing based on tier - using clamp for responsive sizing
+    // Scales with viewport but constrained by min/max to ensure text always fits
+    const textSizeStyle = tier === 'platinum' 
+      ? { fontSize: 'clamp(1.25rem, 3.5vw, 2.25rem)' }
+      : tier === 'gold'
+      ? { fontSize: 'clamp(0.75rem, 2vw, 1.25rem)' }
+      : tier === 'silver'
+      ? { fontSize: 'clamp(0.875rem, 2.5vw, 1.5rem)' }
+      : { fontSize: 'clamp(0.75rem, 2vw, 1.25rem)' };
     const outerGlow = tier === 'platinum' ? 'bg-cyan-400/15 blur-[64px]' : tier === 'gold' ? 'bg-yellow-300/10 blur-[56px]' : tier === 'silver' ? 'bg-gray-300/8 blur-[52px]' : 'bg-orange-200/8 blur-[48px]';
     const gradient = tier === 'platinum' 
       ? 'bg-[radial-gradient(700px_circle_at_20%_20%,rgba(34,211,238,0.28),transparent_42%),radial-gradient(700px_circle_at_80%_60%,rgba(34,211,238,0.22),transparent_42%)]'
@@ -37,9 +45,19 @@ export default function SponsorsPage({ onNavigate }: SponsorsPageProps) {
         <div className={`pointer-events-none absolute -inset-6 -z-10 rounded-3xl ${outerGlow}`} />
         <div className={`aspect-[5/1] w-full flex items-center justify-center rounded-xl bg-white/5 relative overflow-hidden ring-1 ring-white/5 ${ringColor}`}>
           <div className={`absolute inset-0 opacity-25 ${gradient}`} />
-          <span className={`relative z-10 ${textSize} font-semibold tracking-wide text-gray-100 group-hover:text-white select-none`}>
-            {name}
-          </span>
+          <div className="relative z-10 w-full px-4 flex items-center justify-center">
+            <span 
+              className="font-semibold tracking-wide text-gray-100 group-hover:text-white select-none text-center"
+              style={{
+                ...textSizeStyle,
+                width: '100%',
+                display: 'block',
+                lineHeight: '1.2',
+              }}
+            >
+              {name}
+            </span>
+          </div>
         </div>
       </div>
     );
@@ -52,9 +70,6 @@ export default function SponsorsPage({ onNavigate }: SponsorsPageProps) {
       {/* Page hero */}
       <div className="relative py-24 px-4 bg-gradient-to-b from-gray-900 to-black">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block px-4 py-1 bg-yellow-500/10 border border-yellow-400/30 rounded-full mb-6">
-            <span className="text-xs tracking-widest text-yellow-300">OUR SPONSORS</span>
-          </div>
           <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-4">Powered by Partnerships</h1>
           <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">We’re grateful to the companies who fuel our mission.</p>
         </div>
@@ -67,21 +82,25 @@ export default function SponsorsPage({ onNavigate }: SponsorsPageProps) {
 
       <div className="max-w-7xl mx-auto px-4 py-16">
         {/* Platinum */}
-        <div className="mb-20">
+        <div className="mb-20 relative">
           <p className="text-center text-sm md:text-base font-semibold uppercase tracking-[0.35em] text-cyan-300/90 mb-6 drop-shadow">
             PLATINUM SPONSORS
           </p>
           {platinum.length > 0 ? (
             <div className="flex justify-center">
-              {platinum.map((s, i) => (
-                <div key={i} className="w-full max-w-2xl">
-                  <SponsorCard name={s.name} tier="platinum" />
-                </div>
-              ))}
+              <div className="w-full max-w-2xl">
+                {platinum.map((s, i) => (
+                  <SponsorCard key={i} name={s.name} tier="platinum" />
+                ))}
+              </div>
             </div>
           ) : (
             <p className="text-center text-gray-500 text-sm">No platinum sponsors yet</p>
           )}
+          {/* soft orb behind the grid - brightest for platinum */}
+          <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
+            <div className="h-80 w-80 rounded-full bg-cyan-400/15 blur-3xl" />
+          </div>
         </div>
 
         {/* Gold */}
@@ -90,15 +109,17 @@ export default function SponsorsPage({ onNavigate }: SponsorsPageProps) {
             GOLD SPONSORS
           </p>
           {gold.length > 0 ? (
-            <div className="grid md:grid-cols-3 gap-6">
-              {gold.map((s, i) => (
-                <SponsorCard key={i} name={s.name} tier="gold" />
-              ))}
+            <div className="flex justify-center">
+              <div className="grid gap-6 w-full max-w-5xl" style={{ gridTemplateColumns: `repeat(${gold.length}, minmax(min(100%, 280px), 1fr))` }}>
+                {gold.map((s, i) => (
+                  <SponsorCard key={i} name={s.name} tier="gold" />
+                ))}
+              </div>
             </div>
           ) : (
             <p className="text-center text-gray-500 text-sm">No gold sponsors yet</p>
           )}
-          {/* soft orb behind the grid */}
+          {/* soft orb behind the grid - dimmer than platinum */}
           <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
             <div className="h-80 w-80 rounded-full bg-yellow-400/10 blur-3xl" />
           </div>
@@ -110,34 +131,42 @@ export default function SponsorsPage({ onNavigate }: SponsorsPageProps) {
             SILVER SPONSORS
           </p>
           {silver.length > 0 ? (
-            <div className="grid md:grid-cols-3 gap-6">
-              {silver.map((s, i) => (
-                <SponsorCard key={i} name={s.name} tier="silver" />
-              ))}
+            <div className="flex justify-center">
+              <div className="grid gap-6 w-full max-w-5xl" style={{ gridTemplateColumns: `repeat(${silver.length}, minmax(min(100%, 250px), 1fr))` }}>
+                {silver.map((s, i) => (
+                  <SponsorCard key={i} name={s.name} tier="silver" />
+                ))}
+              </div>
             </div>
           ) : (
             <p className="text-center text-gray-500 text-sm">No silver sponsors yet</p>
           )}
-          {/* soft orb behind the grid */}
+          {/* soft orb behind the grid - dimmer than gold */}
           <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
-            <div className="h-80 w-80 rounded-full bg-gray-300/8 blur-3xl" />
+            <div className="h-80 w-80 rounded-full bg-gray-300/14 blur-3xl" />
           </div>
         </div>
 
         {/* Bronze */}
-        <div className="mb-8">
+        <div className="mb-8 relative">
           <p className="text-center text-sm md:text-base font-semibold uppercase tracking-[0.35em] text-orange-200/90 mb-6 drop-shadow">
             BRONZE SPONSORS
           </p>
           {bronze.length > 0 ? (
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {bronze.map((s, i) => (
-                <SponsorCard key={i} name={s.name} tier="bronze" />
-              ))}
+            <div className="flex justify-center">
+              <div className="grid gap-6 w-full max-w-5xl" style={{ gridTemplateColumns: `repeat(${Math.min(bronze.length, 4)}, minmax(min(100%, 220px), 1fr))` }}>
+                {bronze.map((s, i) => (
+                  <SponsorCard key={i} name={s.name} tier="bronze" />
+                ))}
+              </div>
             </div>
           ) : (
             <p className="text-center text-gray-500 text-sm">No bronze sponsors yet</p>
           )}
+          {/* soft orb behind the grid - dimmest for bronze */}
+          <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
+            <div className="h-80 w-80 rounded-full bg-orange-200/12 blur-3xl" />
+          </div>
         </div>
 
         {/* Call to action */}

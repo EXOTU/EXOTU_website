@@ -45,7 +45,7 @@ function App() {
         return (
           <>
             <GridDistortion
-              imageSrc="/RobotArm2.jpg"
+              imageSrc="/images/hero/RobotArm2.jpg"
               grid={30}
               mouse={0.12}
               strength={0.6}

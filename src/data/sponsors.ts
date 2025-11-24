@@ -13,7 +13,6 @@ export const platinum: Sponsor[] = [
 export const gold: Sponsor[] = [
   { name: 'Your Company Here' },
   { name: 'Your Company Here' },
-  { name: 'Your Company Here' },
 ];
 
 export const silver: Sponsor[] = [
@@ -23,6 +22,8 @@ export const silver: Sponsor[] = [
 ];
 
 export const bronze: Sponsor[] = [
+  { name: 'Your Company Here' },
+  { name: 'Your Company Here' },
   { name: 'Your Company Here' },
   { name: 'Your Company Here' },
 ];
